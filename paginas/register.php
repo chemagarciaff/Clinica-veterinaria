@@ -11,34 +11,56 @@ $patron_telefono = "/^[2-9]\d{8}$/";
 $patron_password = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/";
 
 
-
+$comprobadorRegistro = true;
 
 //compruebo si he recibido una petición POST
     if (($_SERVER["REQUEST_METHOD"] == "POST")) {
+
+        //Comprobamos que el email tiene un patron correcto
         if (preg_match($patron_email, $_POST["email"])) {
+
+            //Comprobamos que la contraseña tiene un patron correcto
             if (preg_match($patron_password, $_POST["password"])) {
+
+                //Comprobamos que el dni tiene un patron correcto
                 if (preg_match($patron_dni, $_POST["dni"])) {
+
+                    //Comprobamos que el telefono tiene un patron correcto
                     if (preg_match($patron_telefono, $_POST["telefono"])) {
-                        connect_agenda();
-                        if(insert_cliente($_POST["dni"], $_POST["nombre"], $_POST["ape1"], $_POST["ape2"], $_POST["telefono"], $_POST["email"]) && 
-                        insert_user($_POST["dni"], $_POST["password"], $_POST["email"])) {
-                            header("Location: ../index.php");
+
+                        //Comprobamos que las contraseñas coinciden
+                        if($_POST["password"] == $_POST["confirmPassword"]){
+
+                            connect_agenda();
+
+                            //Hacemos las insercciones en usuarios y en clientes
+                            if(insert_cliente($_POST["dni"], $_POST["nombre"], $_POST["ape1"], $_POST["ape2"], $_POST["telefono"], $_POST["email"]) 
+                            && insert_user($_POST["dni"], $_POST["password"], $_POST["email"])) {
+                                
+                                header("Location: ../index.php?insert=true");
+                            }else {
+                                
+                                $comprobadorRegistro = false;
+                            }
+                        }else{
+                            echo "Las contraseñas no coinciden";
+                            $comprobadorRegistro = false;
                         }
-
-
-
-
                     } else {
                         echo "El formato del telefono no es correcto";
+                        $comprobadorRegistro = false;
                     }
                 } else {
                     echo "El formato del dni no es correcto";
+                    $comprobadorRegistro = false;
                 }
             } else {
                 echo "El formato de la contraseña no es correcto";
+                $comprobadorRegistro = false;
             }
         } else {
             echo "El formato del email no es correcto";
+            $comprobadorRegistro = false;
         }
     }
 ?>
@@ -54,6 +76,7 @@ $patron_password = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/";
     <div class="login-container">
         <h1>Clinica Veterinaria</h1>
         <h3 class="subtitle">Registro</h3>
+        <div class="alert-usuarioNoRegistrado" style="display: "<?php echo (!$comprobadorRegistro) ? "" : "hidden" ?>>Registro Fallido</div>
         <form action="#" method="post">
             <div class="input-group">
                 <label for="email">Correo electronico *</label>
@@ -61,36 +84,36 @@ $patron_password = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/";
             </div>
             <div class="input-group">
                 <label for="password">Contraseña *</label>
-                <input type="password" id="password" name="password" required  value=<?php echo isset($_POST["user"]) ? $_POST["user"] : ""; ?>>
+                <input type="password" id="password" name="password" required  value=<?php echo isset($_POST["password"]) ? $_POST["password"] : ""; ?>>
             </div>
             <div class="input-group">
                 <label for="confirmPassword">Confirmar Contraseña *</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required  value=<?php echo isset($_POST["user"]) ? $_POST["user"] : ""; ?>>
+                <input type="password" id="confirmPassword" name="confirmPassword" required  value=<?php echo isset($_POST["confirmPassword"]) ? $_POST["confirmPassword"] : ""; ?>>
             </div>
             <div class="input-group">
                 <label for="dni">DNI *</label>
-                <input type="text" id="dni" name="dni" required  value=<?php echo isset($_POST["user"]) ? $_POST["user"] : ""; ?>>
+                <input type="text" id="dni" name="dni" required minlength="9" maxlength="9" value=<?php echo isset($_POST["dni"]) ? $_POST["dni"] : ""; ?>>
             </div>
             <div class="input-group">
                 <label for="nombre">Nombre *</label>
-                <input type="text" id="nombre" name="nombre" required  value=<?php echo isset($_POST["user"]) ? $_POST["user"] : ""; ?>>
+                <input type="text" id="nombre" name="nombre" required  value=<?php echo isset($_POST["nombre"]) ? $_POST["nombre"] : ""; ?>>
             </div>
             <div class="input-group">
                 <label for="ape1">Primer apellido *</label>
-                <input type="text" id="ape1" name="ape1" required  value=<?php echo isset($_POST["user"]) ? $_POST["user"] : ""; ?>>
+                <input type="text" id="ape1" name="ape1" required  value=<?php echo isset($_POST["ape1"]) ? $_POST["ape1"] : ""; ?>>
             </div>
             <div class="input-group">
                 <label for="ape2">Segundo apellido</label>
-                <input type="text" id="ape2" name="ape2"  value=<?php echo isset($_POST["user"]) ? $_POST["user"] : ""; ?>>
+                <input type="text" id="ape2" name="ape2"  value=<?php echo isset($_POST["ape2"]) ? $_POST["ape2"] : ""; ?>>
             </div>
             <!-- <div class="input-group">
             </div> -->
             <div class="input-group">
                 <label for="telefono">Telefono *</label>
-                <input type="text" id="telefono" name="telefono" required  value=<?php echo isset($_POST["user"]) ? $_POST["user"] : ""; ?>>
+                <input type="text" id="telefono" name="telefono" required  value=<?php echo isset($_POST["telefono"]) ? $_POST["telefono"] : ""; ?>>
             </div>
             <div class="input-group">
-                <input type="submit" value="Iniciar sesión">
+                <input type="submit" value="Registrar">
             </div>
         </form>
         <div class="forgot-password">

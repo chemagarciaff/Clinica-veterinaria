@@ -31,7 +31,7 @@ $errores = [];
             }
 
         } else{
-            array_push($errores, "El usuario no es correcta");
+            array_push($errores, "El usuario no es correcto");
         }
     }
 
@@ -66,14 +66,15 @@ $errores = [];
     <div class="login-container">
         <h1>Clinica Veterinaria</h2>
         <h3 class="subtitle">Login</h3>
+        <div class="alert-usuarioRegistrado" style="display: "<?php echo (isset($_GET["insert"]) && ($_GET["insert"])) ? "" : "hidden" ?>>Usuario Registrado</div>
         <form action="#" method="post">
             <div class="input-group">
-                <label for="user">Nombre de usuario (DNI)</label>
-                <input type="text" id="user" name="user" required value=<?php echo isset($_POST["user"]) ? $_POST["user"] : ""; ?>>
+                <label for="user">Introduce tu DNI</label>
+                <input type="text" id="user" name="user" required placeholder="01234567A" value=<?php echo isset($_POST["user"]) ? $_POST["user"] : ""; ?>>
             </div>
             <div class="input-group">
                 <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required value=<?php echo isset($_POST["password"]) ? $_POST["password"] : ""; ?>>
+                <input type="password" id="password" name="password" required placeholder="*********" value=<?php echo isset($_POST["password"]) ? $_POST["password"] : ""; ?>>
             </div>
 
             <?php
