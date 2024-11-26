@@ -1,4 +1,5 @@
 body {
+    background-image: url(../assets/images/fondo.avif);
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
     display: flex;
@@ -11,12 +12,16 @@ body {
     background-color: white;
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 300px;
+    border: 1px solid gray; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); 
 }
 .login-container h2 {
     text-align: center;
     margin-bottom: 20px;
+}
+.title{
+    color: #63a2da;
 }
 .input-group {
     margin-bottom: 15px;
@@ -34,14 +39,14 @@ body {
     border-radius: 4px;
 }
 .input-group input[type="submit"] {
-    background-color: #4CAF50;
+    background-color: #63a2da;
     color: white;
     border: none;
     cursor: pointer;
     font-size: 16px;
 }
 .input-group input[type="submit"]:hover {
-    background-color: #45a049;
+    background-color:  #345f84;
 }
 .forgot-password {
     text-align: center;
