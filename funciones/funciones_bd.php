@@ -14,7 +14,15 @@ function connect_agenda()
     }
 }
 
+// -------------------------------------------------COMPROBAR---------------------------------------
 
+
+/**
+ * Funcion para comprobar los usuarios
+ *
+ * @param [type] $user
+ * @return void
+ */
 function comprobarUsuario($user)
 {
     global $pdo;
@@ -31,6 +39,7 @@ function comprobarUsuario($user)
     }
 }
 
+// funcion comprobar contraseaña
 function comprobarContraseña($password)
 {
     global $pdo;
@@ -47,6 +56,7 @@ function comprobarContraseña($password)
     }
 }
 
+// funcion comprobar coincidencia
 function comprobarCoincidencia($user, $password)
 {
     global $pdo;
@@ -64,18 +74,9 @@ function comprobarCoincidencia($user, $password)
 }
 
 
+// -------------------------------------------------INSERCCIONES---------------------------------------
 
-// para eliminar contactos
-
-// try {
-//     $sql = "DELETE FROM agenda WHERE nombreContacto='Lucas'";
-//     $filasBorradas = $pdo->exec($sql);
-//     echo "Se han borrado $filasBorradas filas<br/>";
-// } catch (PDOException $excepcion) {
-//     echo "Error en el borrado de tipo " . $excepcion->getMessage();
-// }
-
-
+// insertar usuario
 function insert_user($dni, $password, $email)
 {
     global $pdo;
@@ -89,6 +90,7 @@ function insert_user($dni, $password, $email)
     }
 }
 
+// insertar clientes
 function insert_cliente($dni, $nombre, $ape1, $ape2, $telefono, $email)
 {
     global $pdo;
@@ -101,11 +103,14 @@ function insert_cliente($dni, $nombre, $ape1, $ape2, $telefono, $email)
         return false;
     }
 }
-function insert_animal($dni, $nombre, $ape1, $ape2, $telefono, $email)
+
+// Insertar mascotas
+function insert_animales($nombre, $edad, $sexo, $tipo_animal, $dni_duenio)
 {
     global $pdo;
     try {
-        $filasInsertadas = $pdo->exec("INSERT INTO clientes VALUES('$dni', '$nombre', '$ape1', '$ape2', '$telefono', '$email')");
+        $filasInsertadas = $pdo->exec("INSERT INTO animales (nombre, edad, sexo, tipo_animal, dni_duenio) 
+        VALUES('$nombre', '$edad', '$sexo', '$tipo_animal', '$dni_duenio')");
         echo "Se ha añadido $filasInsertadas cliente<br />";
         return true;
     } catch (PDOException $excepcion) {
@@ -114,8 +119,140 @@ function insert_animal($dni, $nombre, $ape1, $ape2, $telefono, $email)
     }
 }
 
+// -------------------------------------------------MODIFICAR---------------------------------------
+
+// Modificar mascotas 
+function modificar_mascota()
+{
+    global $pdo;
+    try {
+        $sql = "UPDATE agenda SET emailContacto='jjjj@gmail.com' WHERE emailContacto='jose@gmail.com'";
+        $filasModificadas = $pdo->exec($sql);
+        echo "Se han modificado $filasModificadas filas<br/>";
+    } catch (PDOException $excepcion) {
+        echo "Error en la modificación de tipo " . $excepcion->getMessage();
+    }
+}
+
+// Modificar clientes
+function modificar_clientes()
+{
+    global $pdo;
+    try {
+        $sql = "UPDATE agenda SET emailContacto='jjjj@gmail.com' WHERE emailContacto='jose@gmail.com'";
+        $filasModificadas = $pdo->exec($sql);
+        echo "Se han modificado $filasModificadas filas<br/>";
+    } catch (PDOException $excepcion) {
+        echo "Error en la modificación de tipo " . $excepcion->getMessage();
+    }
+}
+
+// Modificar mascotas 
+function modificar_vacunas()
+{
+    global $pdo;
+    try {
+        $sql = "UPDATE agenda SET emailContacto='jjjj@gmail.com' WHERE emailContacto='jose@gmail.com'";
+        $filasModificadas = $pdo->exec($sql);
+        echo "Se han modificado $filasModificadas filas<br/>";
+    } catch (PDOException $excepcion) {
+        echo "Error en la modificación de tipo " . $excepcion->getMessage();
+    }
+}
+
+
+// -------------------------------------------------ELIMINAR---------------------------------------
+
+
+
+// Funcion para eliminar cliente y usuario a la vez
+function eliminar_cliente($dni)
+{
+    global $pdo;
+    try {
+
+        $sql1= "DELETE FROM clientes WHERE dni = '$dni'";
+        $sql2 = "DELETE FROM usuarios WHERE user = '$dni'";
+        $stmt1 = $pdo->prepare($sql1);
+        $stmt2 = $pdo->prepare($sql2);
+
+        $stmt1->execute();
+        $filasBorradas = $stmt1->rowCount();
+
+        $stmt2->execute();
+        $filasBorradas = $stmt2->rowCount();
+
+        if ($filasBorradas > 0) {
+            echo "Se ha eliminado el contacto con DNI: $dni<br/>";
+            return true;
+        } else {
+            echo "No se encontró ningún contacto con el DNI proporcionado.<br/>";
+            return false;
+        }
+    } catch (PDOException $excepcion) {
+        echo "Error en el borrado: " . $excepcion->getMessage();
+        return false;
+    }
+}
+
+
+
+
+// Funcion para eliminar mascota
+function eliminar_animal($id)
+{
+    global $pdo;
+    try {
+
+        $sql= "DELETE FROM animales WHERE id = '$id'";
+        $stmt = $pdo->prepare($sql);
+
+        $stmt->execute();
+        $filasBorradas = $stmt->rowCount();
+
+        if ($filasBorradas > 0) {
+            echo "Se ha eliminado el animal con el ID: $id<br/>";
+            return true;
+        } else {
+            echo "No se encontró ningún animal con el ID proporcionado.<br/>";
+            return false;
+        }
+    } catch (PDOException $excepcion) {
+        echo "Error en el borrado: " . $excepcion->getMessage();
+        return false;
+    }
+}
+
+
+// Funcion para eliminar vacuna
+function eliminar_vacuna($nombre_vacuna)
+{
+    global $pdo;
+    try {
+
+        $sql= "DELETE FROM vacunas WHERE nombre_vacuna = '$nombre_vacuna'";
+        $stmt = $pdo->prepare($sql);
+
+        $stmt->execute();
+        $filasBorradas = $stmt->rowCount();
+
+        if ($filasBorradas > 0) {
+            echo "Se ha eliminado la vacuna llamada: $nombre_vacuna<br/>";
+            return true;
+        } else {
+            echo "No se encontró ninguna vacuna con el nombre proporcionado.<br/>";
+            return false;
+        }
+    } catch (PDOException $excepcion) {
+        echo "Error en el borrado: " . $excepcion->getMessage();
+        return false;
+    }
+}
+
+// -------------------------------------------------SELECCIONAR---------------------------------------
 
 // consultas
+// seleccionar usuario
 function select_user()
 {
     global $pdo;
@@ -131,6 +268,7 @@ function select_user()
     }
 }
 
+// seleccionar clientes
 function select_cliente()
 {
     global $pdo;
@@ -153,15 +291,3 @@ function select_cliente()
 
 
 
-// hacemos una modificación en los datos del contacto 
-function modify_agenda()
-{
-    global $pdo;
-    try {
-        $sql = "UPDATE agenda SET emailContacto='jjjj@gmail.com' WHERE emailContacto='jose@gmail.com'";
-        $filasModificadas = $pdo->exec($sql);
-        echo "Se han modificado $filasModificadas filas<br/>";
-    } catch (PDOException $excepcion) {
-        echo "Error en la modificación de tipo " . $excepcion->getMessage();
-    }
-}
