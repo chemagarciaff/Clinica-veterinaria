@@ -1,3 +1,11 @@
+*,
+ul,
+li {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
 body {
     background-image: url(../assets/images/fondo.avif);
     font-family: Arial, sans-serif;
@@ -8,6 +16,7 @@ body {
     height: 100vh;
     margin: 0;
 }
+
 
 .login-container {
     background-color: white;
@@ -25,6 +34,8 @@ body {
 
 .title {
     color: #63a2da;
+    font-size: 25px;
+    margin-bottom: 10px;
 }
 
 .input-group {
@@ -65,6 +76,8 @@ body {
 .subtitle {
     text-align: center;
     width: 100%;
+    margin: 10px 0;
+    margin-bottom: 15px;
 }
 
 .error {
@@ -111,7 +124,7 @@ a:visited {
 }
 
 .container {
-    background-color: #f4f4f9;
+    background-color: #f4f4f9ee;
     width: 1200px;
     margin: 0 auto;
     display: grid;
@@ -128,6 +141,7 @@ a:visited {
     border: 1px solid gray;
     display: flex;
     justify-content: center;
+    align-items: center;
     position: relative;
 
     .logo {
@@ -140,6 +154,28 @@ a:visited {
 .aside {
     grid-area: aside;
     border: 1px solid gray;
+
+    .list {
+        /* border: 1px solid firebrick; */
+        width: 250px;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        padding: 0;
+        margin: 0;
+    }
+
+    .list__item {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid gray;
+    }
 }
 
 .main {

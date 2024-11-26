@@ -101,6 +101,18 @@ function insert_cliente($dni, $nombre, $ape1, $ape2, $telefono, $email)
         return false;
     }
 }
+function insert_animal($dni, $nombre, $ape1, $ape2, $telefono, $email)
+{
+    global $pdo;
+    try {
+        $filasInsertadas = $pdo->exec("INSERT INTO clientes VALUES('$dni', '$nombre', '$ape1', '$ape2', '$telefono', '$email')");
+        echo "Se ha añadido $filasInsertadas cliente<br />";
+        return true;
+    } catch (PDOException $excepcion) {
+        echo "Error en la inserción de tipo " . $excepcion->getMessage();
+        return false;
+    }
+}
 
 
 // consultas

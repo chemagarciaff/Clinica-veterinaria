@@ -17,8 +17,20 @@ select_cliente();
 
 
 
+if (isset($_POST["editar"])) {
 
+    if ($_POST["editar"]) {
+        echo "editar";
+    }
+}
+if (isset($_POST["consultar"])) {
+
+    if ($_POST["consultar"]) {
+        echo "consultar";
+    }
+}
 ?>
+
 
 
 
@@ -38,7 +50,16 @@ select_cliente();
             <img src="./../assets/images/logo_clinica.png" alt="" class="logo">
             <h2 class="saludo">Bienvenido <?php echo $_SESSION["nombre"] ?></h2>
         </header>
-        <aside class="aside">aside</aside>
+        <aside class="aside">
+            <form action="#" method="post" class="list">
+                <input type="hidden" name="editar" value="editar">
+                <button class="list__item" type="submit">Editar Datos Usuario</button>
+            </form>
+            <form action="#" method="post" class="list">
+                <input type="hidden" name="consultar" value="consultar">
+                <button class="list__item" type="submit">Consultar Mascotas</button>
+            </form>
+        </aside>
         <main class="main">main</main>
         <footer class="footer">footer</footer>
     </container>
