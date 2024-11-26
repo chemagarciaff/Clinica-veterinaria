@@ -8,29 +8,35 @@ body {
     height: 100vh;
     margin: 0;
 }
+
 .login-container {
     background-color: white;
     padding: 30px;
     border-radius: 8px;
     width: 300px;
-    border: 1px solid gray; 
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); 
+    border: 1px solid gray;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
+
 .login-container h2 {
     text-align: center;
     margin-bottom: 20px;
 }
-.title{
+
+.title {
     color: #63a2da;
 }
+
 .input-group {
     margin-bottom: 15px;
 }
+
 .input-group label {
     font-size: 14px;
     margin-bottom: 5px;
     display: block;
 }
+
 .input-group input {
     width: 100%;
     padding: 10px;
@@ -38,6 +44,7 @@ body {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
 .input-group input[type="submit"] {
     background-color: #63a2da;
     color: white;
@@ -45,27 +52,34 @@ body {
     cursor: pointer;
     font-size: 16px;
 }
+
 .input-group input[type="submit"]:hover {
-    background-color:  #345f84;
+    background-color: #345f84;
 }
+
 .forgot-password {
     text-align: center;
     margin-top: 10px;
 }
-.subtitle{
+
+.subtitle {
     text-align: center;
     width: 100%;
 }
-.error{
+
+.error {
     color: red;
 }
-a{
+
+a {
     color: black;
 }
-a:visited{
+
+a:visited {
     color: black;
 }
-.alert-usuarioRegistrado{
+
+.alert-usuarioRegistrado {
     width: 100%;
     height: 30px;
     background-color: #45a049a5;
@@ -74,7 +88,8 @@ a:visited{
     margin: 10px 0;
     padding-top: 10px;
 }
-.alert-usuarioNoRegistrado{
+
+.alert-usuarioNoRegistrado {
     width: 100%;
     height: 30px;
     background-color: #cb1f1fa5;
@@ -83,4 +98,56 @@ a:visited{
     margin: 10px 0;
     padding-top: 10px;
 
+}
+
+
+
+
+/* PAGINA PRINCIPAL */
+
+.bodyUser {
+    align-items: start;
+    margin-top: 20px;
+}
+
+.container {
+    background-color: #f4f4f9;
+    width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 70px 1fr 200px;
+    grid-template-areas:
+        "header header"
+        "aside main"
+        "footer footer";
+}
+
+.header {
+    grid-area: header;
+    border: 1px solid gray;
+    display: flex;
+    justify-content: center;
+    position: relative;
+
+    .logo {
+        position: absolute;
+        left: 5px;
+        width: 70px;
+    }
+}
+
+.aside {
+    grid-area: aside;
+    border: 1px solid gray;
+}
+
+.main {
+    grid-area: main;
+    border: 1px solid gray;
+}
+
+.footer {
+    grid-area: footer;
+    border: 1px solid gray;
 }

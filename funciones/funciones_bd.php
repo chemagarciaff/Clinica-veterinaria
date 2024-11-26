@@ -1,6 +1,7 @@
 <?php
 // funcion conectar agenda
 
+
 function connect_agenda()
 {
     global $pdo;
@@ -14,13 +15,14 @@ function connect_agenda()
 }
 
 
-function comprobarUsuario ($user) {
+function comprobarUsuario($user)
+{
     global $pdo;
     try {
         $sql = "SELECT * FROM usuarios";
         $lista = $pdo->query($sql);
         while ($usuario = $lista->fetch()) {
-            if(trim($usuario["user"]) == trim($user)){   
+            if (trim($usuario["user"]) == trim($user)) {
                 return true;
             }
         }
@@ -29,13 +31,14 @@ function comprobarUsuario ($user) {
     }
 }
 
-function comprobarContraseña ($password) {
+function comprobarContraseña($password)
+{
     global $pdo;
     try {
         $sql = "SELECT * FROM usuarios";
         $lista = $pdo->query($sql);
         while ($usuario = $lista->fetch()) {
-            if($usuario["password"] == $password){
+            if ($usuario["password"] == $password) {
                 return true;
             }
         }
@@ -44,13 +47,14 @@ function comprobarContraseña ($password) {
     }
 }
 
-function comprobarCoincidencia($user, $password) {
+function comprobarCoincidencia($user, $password)
+{
     global $pdo;
     try {
         $sql = "SELECT * FROM usuarios";
         $lista = $pdo->query($sql);
         while ($usuario = $lista->fetch()) {
-            if($usuario["password"] == $password && $usuario["user"] == $user){
+            if ($usuario["password"] == $password && $usuario["user"] == $user) {
                 return true;
             }
         }
@@ -59,30 +63,19 @@ function comprobarCoincidencia($user, $password) {
     }
 }
 
-// hacemos una modificación en los datos del contacto 
-function modify_agenda()
-{
-    global $pdo;
-    try {
-        $sql = "UPDATE agenda SET emailContacto='jjjj@gmail.com' WHERE emailContacto='jose@gmail.com'";
-        $filasModificadas = $pdo->exec($sql);
-        echo "Se han modificado $filasModificadas filas<br/>";
-    } catch (PDOException $excepcion) {
-        echo "Error en la modificación de tipo " . $excepcion->getMessage();
-    }
-}
+
 
 // para eliminar contactos
 
 // try {
-    //     $sql = "DELETE FROM agenda WHERE nombreContacto='Lucas'";
-    //     $filasBorradas = $pdo->exec($sql);
-    //     echo "Se han borrado $filasBorradas filas<br/>";
-    // } catch (PDOException $excepcion) {
-        //     echo "Error en el borrado de tipo " . $excepcion->getMessage();
-        // }
-        
-        
+//     $sql = "DELETE FROM agenda WHERE nombreContacto='Lucas'";
+//     $filasBorradas = $pdo->exec($sql);
+//     echo "Se han borrado $filasBorradas filas<br/>";
+// } catch (PDOException $excepcion) {
+//     echo "Error en el borrado de tipo " . $excepcion->getMessage();
+// }
+
+
 function insert_user($dni, $password, $email)
 {
     global $pdo;
@@ -108,9 +101,10 @@ function insert_cliente($dni, $nombre, $ape1, $ape2, $telefono, $email)
         return false;
     }
 }
-        
+
+
 // consultas
-function select_agenda()
+function select_user()
 {
     global $pdo;
     try {
@@ -122,5 +116,40 @@ function select_agenda()
         }
     } catch (PDOException $excepcion) {
         echo "Error en la consulta de tipo " . $excepcion->getMessage();
+    }
+}
+
+function select_cliente()
+{
+    global $pdo;
+    try {
+        $sql = "SELECT * FROM clientes";
+        $lista = $pdo->query($sql);
+        while ($cliente = $lista->fetch()) {
+            if ($cliente["dni"] == $_SESSION["user"]) {
+                $_SESSION["nombre"] = $cliente["nombre"];
+                $_SESSION["ape1"] = $cliente["ape1"];
+                $_SESSION["ape2"] = $cliente["ape2"];
+                $_SESSION["telefono"] = $cliente["telefono"];
+                $_SESSION["correo"] = $cliente["correo"];
+            }
+        }
+    } catch (PDOException $excepcion) {
+        echo "Error en la consulta de tipo " . $excepcion->getMessage();
+    }
+}
+
+
+
+// hacemos una modificación en los datos del contacto 
+function modify_agenda()
+{
+    global $pdo;
+    try {
+        $sql = "UPDATE agenda SET emailContacto='jjjj@gmail.com' WHERE emailContacto='jose@gmail.com'";
+        $filasModificadas = $pdo->exec($sql);
+        echo "Se han modificado $filasModificadas filas<br/>";
+    } catch (PDOException $excepcion) {
+        echo "Error en la modificación de tipo " . $excepcion->getMessage();
     }
 }
