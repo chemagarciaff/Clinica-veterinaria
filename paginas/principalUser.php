@@ -9,6 +9,9 @@ connect_agenda();
 
 select_cliente();
 
+// eliminar_cliente('04857857G');
+// eliminar_vacuna();
+
 // echo $_SESSION["nombre"];
 // echo $_SESSION["ape1"];
 // echo $_SESSION["ape2"];
@@ -61,7 +64,15 @@ if (isset($_POST["consultar"])) {
             </form>
         </aside>
         <main class="main">main</main>
-        <footer class="footer">footer</footer>
+        <footer class="footer">
+            <div class="footer-content">
+                <p class="text__footer">2024 Clínica Veterinaria</p>
+                <p class="text__footer">Avenida del Principe Nº 12, Talavera de la Reina</p>
+                <p class="text__footer">Teléfono: 123-456-789</p>
+                <p class="text__footer">Email: contacto@clinicaveterinaria.com</p>
+            </div>
+        </footer>
+
     </container>
 </body>
 

@@ -17,7 +17,9 @@ body {
     margin: 0;
 }
 
+/* FORMULARIO */
 
+/* formualrio prime */
 .login-container {
     background-color: white;
     padding: 30px;
@@ -40,6 +42,7 @@ body {
 
 .input-group {
     margin-bottom: 15px;
+   
 }
 
 .input-group label {
@@ -183,7 +186,71 @@ a:visited {
     border: 1px solid gray;
 }
 
+/* SALUDO */
+.saludo{
+    color: #63a2da;
+}
+
+/* BOTONES EDITAR Y CONSULTAR*/
+
+.list__item {
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    width: 100%;
+    margin: 10px 0;
+    transition: background-color 0.3s, transform 0.3s;
+    color: #345f84;
+    /* border: 2px solid gray; */
+    background-color: #dce1e694;
+}
+
+
+.list__item:hover {
+    background-color: #345f84; 
+    transform: translateY(-2px);
+    color: white;
+}
+
+
+
+.list__item:focus {
+    outline: none; 
+    box-shadow: 0 0 5px 2px rgba(99, 162, 218, 0.7); 
+
+}
+
+
+/* FOOTER */
 .footer {
     grid-area: footer;
     border: 1px solid gray;
+}
+
+/* Estilos del footer */
+.footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #63a2da; 
+    color: white;
+    text-align: center;
+    /* height: 100px; */
+}
+
+.footer-content{
+    margin: 5px;
+}
+
+.footer-content {
+    font-weight: bold;
+}
+
+.text__footer{
+    margin: 14px;
+    font-size: 1rem;
 }

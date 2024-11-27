@@ -7,6 +7,7 @@ include_once "./funciones/funciones_bd.php";
 
 $errores = [];
 
+
 //compruebo si he recibido una petición POST
 if (($_SERVER["REQUEST_METHOD"] == "POST")) {
     connect_agenda();
