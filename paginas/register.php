@@ -5,6 +5,8 @@ session_start();
 include_once "./../funciones/funciones_bd.php";
 include_once "./../funciones/funciones.php";
 
+$_ERROR = [];
+
 
 $patron_email = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
 $patron_dni = "/^\d{8}[A-Z]$/";
@@ -46,23 +48,23 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
                             $comprobadorRegistro = false;
                         }
                     } else {
-                        echo "Las contraseñas no coinciden";
+                        $_ERROR["password"] = "Las contraseñas no coinciden";
                         $comprobadorRegistro = false;
                     }
                 } else {
-                    echo "El formato del telefono no es correcto";
+                    $_ERROR["telefono"] = "El formato del telefono no es correcto";
                     $comprobadorRegistro = false;
                 }
             } else {
-                echo "El formato del dni no es correcto";
+                $_ERROR["dni"] = "El formato del dni no es correcto";
                 $comprobadorRegistro = false;
             }
         } else {
-            echo "El formato de la contraseña no es correcto";
+            $_ERROR["password"] = "El formato de la contraseña no es correcto";
             $comprobadorRegistro = false;
         }
     } else {
-        echo "El formato del email no es correcto";
+        $_ERROR["email"] = "El formato del email no es correcto";
         $comprobadorRegistro = false;
     }
 }
@@ -89,29 +91,43 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
                 <label for="email">Correo electronico *</label>
                 <input type="email" id="email" name="email" required value=<?php echo isset($_POST["email"]) ? $_POST["email"] : ""; ?>>
             </div>
-            <div class="input-group">
-                <label for="password">Contraseña *</label>
-                <input type="password" id="password" name="password" required value=<?php echo isset($_POST["password"]) ? $_POST["password"] : ""; ?>>
+            <?php echo isset($_ERROR["email"]) ? '<p class="register-error"> '.$_ERROR["email"].'</p>' : ""?>
+            <div class="row-group">
+
+                <div class="input-group">
+                    <label for="password">Contraseña *</label>
+                    <input type="password" id="password" name="password" required value=<?php echo isset($_POST["password"]) ? $_POST["password"] : ""; ?>>
+                </div>
+                <div class="input-group">
+                    <label for="confirmPassword">Confirmar Contraseña *</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required value=<?php echo isset($_POST["confirmPassword"]) ? $_POST["confirmPassword"] : ""; ?>>
+                </div>
             </div>
-            <div class="input-group">
-                <label for="confirmPassword">Confirmar Contraseña *</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required value=<?php echo isset($_POST["confirmPassword"]) ? $_POST["confirmPassword"] : ""; ?>>
+            <?php echo isset($_ERROR["password"]) ? '<p class="register-error"> '.$_ERROR["password"].'</p>' : ""?>
+            
+            <div class="row-group">
+
+                <div class="input-group">
+                    <label for="dni">DNI *</label>
+                    <input type="text" id="dni" name="dni" required minlength="9" maxlength="9" value=<?php echo isset($_POST["dni"]) ? $_POST["dni"] : ""; ?>>
+                </div>
+                <div class="input-group">
+                    <label for="nombre">Nombre *</label>
+                    <input type="text" id="nombre" name="nombre" required value=<?php echo isset($_POST["nombre"]) ? $_POST["nombre"] : ""; ?>>
+                </div>
             </div>
-            <div class="input-group">
-                <label for="dni">DNI *</label>
-                <input type="text" id="dni" name="dni" required minlength="9" maxlength="9" value=<?php echo isset($_POST["dni"]) ? $_POST["dni"] : ""; ?>>
-            </div>
-            <div class="input-group">
-                <label for="nombre">Nombre *</label>
-                <input type="text" id="nombre" name="nombre" required value=<?php echo isset($_POST["nombre"]) ? $_POST["nombre"] : ""; ?>>
-            </div>
-            <div class="input-group">
-                <label for="ape1">Primer apellido *</label>
-                <input type="text" id="ape1" name="ape1" required value=<?php echo isset($_POST["ape1"]) ? $_POST["ape1"] : ""; ?>>
-            </div>
-            <div class="input-group">
-                <label for="ape2">Segundo apellido</label>
-                <input type="text" id="ape2" name="ape2" value=<?php echo isset($_POST["ape2"]) ? $_POST["ape2"] : ""; ?>>
+            <?php echo isset($_ERROR["dni"]) ? '<p class="register-error"> '.$_ERROR["dni"].'</p>' : ""?>
+
+            <div class="row-group">
+
+                <div class="input-group">
+                    <label for="ape1">Primer apellido *</label>
+                    <input type="text" id="ape1" name="ape1" required value=<?php echo isset($_POST["ape1"]) ? $_POST["ape1"] : ""; ?>>
+                </div>
+                <div class="input-group">
+                    <label for="ape2">Segundo apellido</label>
+                    <input type="text" id="ape2" name="ape2" value=<?php echo isset($_POST["ape2"]) ? $_POST["ape2"] : ""; ?>>
+                </div>
             </div>
             <!-- <div class="input-group">
             </div> -->
@@ -119,6 +135,8 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
                 <label for="telefono">Telefono *</label>
                 <input type="text" id="telefono" name="telefono" required value=<?php echo isset($_POST["telefono"]) ? $_POST["telefono"] : ""; ?>>
             </div>
+            <?php echo isset($_ERROR["telefono"]) ? '<p class="register-error"> '.$_ERROR["telefono"].'</p>' : ""?>
+
             <div class="input-group">
                 <input type="submit" value="Registrar">
             </div>

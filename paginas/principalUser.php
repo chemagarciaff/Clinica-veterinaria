@@ -50,6 +50,7 @@ if (isset($_POST["consultar"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bienvenido</title>
     <link rel="stylesheet" href="./../estilos/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body class="bodyUser">
@@ -57,6 +58,10 @@ if (isset($_POST["consultar"])) {
         <header class="header">
             <img src="./../assets/images/logo_clinica.png" alt="" class="logo">
             <h2 class="saludo">Bienvenido <?php echo $_SESSION["nombre"] ?></h2>
+            <a href="./logout.php" class="btn-logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+
+            
+
         </header>
         <aside class="aside">
             <form action="#" method="post" class="list">

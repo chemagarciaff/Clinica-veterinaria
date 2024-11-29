@@ -24,9 +24,12 @@ body {
     background-color: white;
     padding: 30px;
     border-radius: 8px;
-    width: 300px;
+    /* width: 300px; */
     border: 1px solid gray;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .login-container h2 {
@@ -38,6 +41,12 @@ body {
     color: #63a2da;
     font-size: 25px;
     margin-bottom: 10px;
+    text-align: center;
+}
+
+.row-group{
+    display: flex;
+    gap: 20px;
 }
 
 .input-group {
@@ -116,6 +125,13 @@ a:visited {
 
 }
 
+.register-error{
+    color: red;
+    font-size: 0.8rem;
+    margin-bottom: 18px;
+    margin-top: -6px;
+}
+
 
 
 
@@ -151,6 +167,17 @@ a:visited {
         position: absolute;
         left: 5px;
         width: 70px;
+    }
+
+    .btn-logout{
+        position: absolute;
+        right: 15px;
+        font-size: 2rem;
+        color: #63a2da;
+        transition: scale 0.3s ;
+    }
+    .btn-logout:hover{
+        scale: 1.2;
     }
 }
 
