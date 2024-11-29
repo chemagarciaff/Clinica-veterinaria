@@ -289,5 +289,21 @@ function select_cliente()
     }
 }
 
+function select_mascotas($user)
+{
+    global $pdo;
+    try {
+        $sql = "SELECT * FROM animales WHERE dni_duenio = '$user'";
+        $lista = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        if (count($lista) > 0){
+            return $lista;
+        }else{
+            return [];
+        }
+        return $lista;
+    } catch (PDOException $excepcion) {
+        return 'Ha ocurrido una excepcion '. $excepcion;
+    }
+}
 
 

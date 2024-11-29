@@ -9,8 +9,13 @@ connect_agenda();
 
 select_cliente();
 
+$mascotas = select_mascotas($_SESSION["user"]);
+
+// var_dump($mascotas);
+
 // eliminar_cliente('04857857G');
 // eliminar_vacuna();
+
 
 // echo $_SESSION["nombre"];
 // echo $_SESSION["ape1"];
@@ -63,7 +68,40 @@ if (isset($_POST["consultar"])) {
                 <button class="list__item" type="submit">Consultar Mascotas</button>
             </form>
         </aside>
-        <main class="main">main</main>
+        <main class="main">
+            <?php 
+            if(count($mascotas) > 0){
+            ?>
+             <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Edad</th>
+        <th>Sexo</th>
+        <th>Dueño</th>
+        <th>Tipo</th>
+      </tr>
+    </thead>
+    <tbody id="mascotas-table-body">
+      <?php
+      foreach ($mascotas as $key => $mascota) {
+        echo "<td>" . $mascota["nombre"] . "</td>";
+        echo "<td>" . $mascota["edad"] . "</td>";
+        echo "<td>" . $mascota["sexo"] . "</td>";
+        echo "<td>" . $mascota["dni_duenio"] . "</td>";
+        echo "<td>" . $mascota["tipo_animal"] . "</td>";
+      }
+
+      ?>
+    </tbody>
+  </table>
+  <?php
+  }else{
+    echo $_SESSION['nombre'] . " aun no tienes mascotas registradas";
+  }
+  ?>
+
+        </main>
         <footer class="footer">
             <div class="footer-content">
                 <p class="text__footer">2024 Clínica Veterinaria</p>

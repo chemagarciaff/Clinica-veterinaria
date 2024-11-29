@@ -40,7 +40,6 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
 
 
 
-
 // if(comprobarUsuarios($_POST["user"], $_POST["password"])) {
 
 //         $_SESSION["usuario"] = $_POST["user"];
