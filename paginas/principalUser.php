@@ -9,34 +9,6 @@ connect_agenda();
 
 select_cliente();
 
-$mascotas = select_mascotas($_SESSION["user"]);
-
-// var_dump($mascotas);
-
-// eliminar_cliente('04857857G');
-// eliminar_vacuna();
-
-
-// echo $_SESSION["nombre"];
-// echo $_SESSION["ape1"];
-// echo $_SESSION["ape2"];
-// echo $_SESSION["telefono"];
-// echo $_SESSION["correo"];
-
-
-
-if (isset($_POST["editar"])) {
-
-    if ($_POST["editar"]) {
-        echo "editar";
-    }
-}
-if (isset($_POST["consultar"])) {
-
-    if ($_POST["consultar"]) {
-        echo "consultar";
-    }
-}
 ?>
 
 
@@ -49,15 +21,15 @@ if (isset($_POST["consultar"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bienvenido</title>
-    <link rel="stylesheet" href="./../estilos/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="./../estilos/style.css">
 </head>
 
 <body class="bodyUser">
     <container class="container">
         <header class="header">
             <img src="./../assets/images/logo_clinica.png" alt="" class="logo">
-            <h2 class="saludo">Bienvenido <?php echo $_SESSION["nombre"] ?></h2>
+            <h2 class="saludo">Bienvenido <?php echo $_SESSION["nombre"] . " " . $_SESSION["ape1"] ?></h2>
             <a href="./logout.php" class="btn-logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
 
             
@@ -74,36 +46,73 @@ if (isset($_POST["consultar"])) {
             </form>
         </aside>
         <main class="main">
-            <?php 
-            if(count($mascotas) > 0){
+
+            <?php echo (isset($_GET["edit"]) && $_GET["edit"] == "false") ? "No hay ningun cambio que realizar" : ""  ?>
+            <?php echo (isset($_GET["edit"]) && $_GET["edit"] == "true") ? "Cambios realizados" : ""  ?>
+
+            <?php echo (!isset($_POST["editar"]) && !isset($_POST["consultar"])) ? "<p style='padding:15px'>Elige una opcion...</p>" : "" ?>
+
+            <?php if (isset($_POST["editar"])){     ?>
+
+            <form action="./cambioDatos.php" method="get" class="formularioEditar">
+                <div class="input-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" value=<?php echo (isset($_SESSION["nombre"])) ? $_SESSION["nombre"] : ""?>>
+                </div>
+                <div class="input-group">
+                    <label for="ape1">Primer Apellido</label>
+                    <input type="text" id="ape1" name="ape1" value=<?php echo (isset($_SESSION["ape1"])) ? $_SESSION["ape1"] : ""?>>
+                </div>
+                <div class="input-group">
+                    <label for="ape2">Segundo Apellido</label>
+                    <input type="text" id="ape2" name="ape2" value=<?php echo (isset($_SESSION["ape2"])) ? $_SESSION["ape2"] : ""?>>
+                </div>
+                <div class="input-group">
+                    <label for="telefono">Telefono</label>
+                    <input type="text" id="telefono" name="telefono" value=<?php echo (isset($_SESSION["telefono"])) ? $_SESSION["telefono"] : ""?>>
+                </div>
+                <div class="input-group">
+                    <label for="correo">Correo</label>
+                    <input type="text" id="correo" name="correo" value=<?php echo (isset($_SESSION["correo"])) ? $_SESSION["correo"] : ""?>>
+                </div>
+
+                
+                <button type="submit">Guardar Cambios</button>
+                <button type="reset">Mantener Cambios</button>
+                </form>
+
+
+
+
+
+
+            <?php }elseif (isset($_POST["consultar"])){  
+
+                $mascotas = select_mascotas($_SESSION["user"]);
+           
+                if(count($mascotas) > 0){
             ?>
              <table>
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Edad</th>
-        <th>Sexo</th>
-        <th>Dueño</th>
-        <th>Tipo</th>
-      </tr>
-    </thead>
-    <tbody id="mascotas-table-body">
-      <?php
-      foreach ($mascotas as $key => $mascota) {
-        echo "<td>" . $mascota["nombre"] . "</td>";
-        echo "<td>" . $mascota["edad"] . "</td>";
-        echo "<td>" . $mascota["sexo"] . "</td>";
-        echo "<td>" . $mascota["dni_duenio"] . "</td>";
-        echo "<td>" . $mascota["tipo_animal"] . "</td>";
-      }
-
-      ?>
-    </tbody>
-  </table>
-  <?php
-  }else{
-    echo $_SESSION['nombre'] . " aun no tienes mascotas registradas";
-  }
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Edad</th>
+                        <th>Sexo</th>
+                        <th>Dueño</th>
+                        <th>Tipo</th>
+                    </tr>
+                </thead>
+                <tbody id="mascotas-table-body">
+                    <?php
+                    mostrarMascotas($mascotas);
+                    ?>
+                </tbody>
+            </table>
+            <?php
+            }else{
+                echo $_SESSION['nombre'] . " aun no tienes mascotas registradas";
+            }
+        }
   ?>
 
         </main>

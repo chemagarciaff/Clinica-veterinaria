@@ -307,3 +307,43 @@ function select_mascotas($user)
 }
 
 
+function mostrarMascotas($mascotas) {
+   foreach ($mascotas as $indice => $info) {
+
+    echo "<tr>";
+    echo "<td>" . $info["nombre"] . "</td>";
+    echo "<td>" . $info["edad"] . "</td>";
+    echo "<td>" . $info["sexo"] . "</td>";
+    echo "<td>" . $info["dni_duenio"] . "</td>";
+    echo "<td>" . $info["tipo_animal"] . "</td>";
+    echo "</tr>";   
+}
+}
+
+
+function comprobarCambiosPerfil() {
+    session_start();
+    print_r($_GET);
+    print_r($_SESSION);
+    if ($_GET["nombre"] == $_SESSION["nombre"]){
+        if ($_GET["ape1"] == $_SESSION["ape1"]){
+            if ($_GET["ape2"] == $_SESSION["ape2"]){
+                if ($_GET["telefono"] == $_SESSION["telefono"]){
+                    if ($_GET["correo"] == $_SESSION["correo"]){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                } else{
+                    return false;
+                }
+            } else{
+                return false;
+            }
+        } else{
+            return false;
+        }
+    } else {
+        return false;
+    }
+}

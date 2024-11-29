@@ -281,3 +281,9 @@ a:visited {
     margin: 14px;
     font-size: 1rem;
 }
+
+
+.formularioEditar{
+    width: 500px;
+    margin: 25px auto;
+}

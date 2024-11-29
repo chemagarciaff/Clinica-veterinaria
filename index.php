@@ -89,6 +89,7 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
             <div class="input-group">
                 <input type="submit" value="Iniciar sesión">
             </div>
+
         </form>
         <div class="forgot-password">
             <a href="./paginas/register.php">¿No tienes cuenta? Registrate</a>
