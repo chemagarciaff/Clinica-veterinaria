@@ -37,20 +37,6 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
     }
 }
 
-
-
-
-// if(comprobarUsuarios($_POST["user"], $_POST["password"])) {
-
-//         $_SESSION["usuario"] = $_POST["user"];
-//         $_SESSION["clave"] = $_POST["password"];
-
-//         header("Location: ./paginas/saludo.php");
-//         exit();
-
-// }else {
-//     $errores = "Usuario o contraseña incorrectos";
-// }
 ?>
 
 
@@ -72,7 +58,7 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
         <div class="alert-usuarioRegistrado" style="display: " <?php echo (isset($_GET["insert"]) && ($_GET["insert"])) ? "" : "hidden" ?>>Usuario Registrado</div>
         <form action="#" method="post">
             <div class="input-group">
-                <label for="user">Introduce tu DNI</label>
+                <label for="user">Introduce tu DNI: </label>
                 <input type="text" id="user" name="user" required placeholder="01234567A" value=<?php echo isset($_POST["user"]) ? $_POST["user"] : ""; ?>>
             </div>
             <div class="input-group">

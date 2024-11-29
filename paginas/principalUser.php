@@ -47,10 +47,10 @@ select_cliente();
         </aside>
         <main class="main">
 
-            <?php echo (isset($_GET["edit"]) && $_GET["edit"] == "false") ? "No hay ningun cambio que realizar" : ""  ?>
-            <?php echo (isset($_GET["edit"]) && $_GET["edit"] == "true") ? "Cambios realizados" : ""  ?>
+            <?php echo ($_SERVER["REQUEST_METHOD"]=="GET" && isset($_GET["edit"]) && $_GET["edit"] == "false") ? "<p class='cambios'>No hay cambios que realizar</p>" : ""  ?>
+            <?php echo ($_SERVER["REQUEST_METHOD"]=="GET" && isset($_GET["edit"]) && $_GET["edit"] == "true") ? "<p class='cambios'>Cambios realizados</p>" : ""  ?>
 
-            <?php echo (!isset($_POST["editar"]) && !isset($_POST["consultar"])) ? "<p style='padding:15px'>Elige una opcion...</p>" : "" ?>
+            <?php echo (!isset($_POST["editar"]) && !isset($_POST["consultar"])) ? "<p class='opcion'>Elige una opcion...</p>" : "" ?>
 
             <?php if (isset($_POST["editar"])){     ?>
 
@@ -98,7 +98,7 @@ select_cliente();
                         <th>Nombre</th>
                         <th>Edad</th>
                         <th>Sexo</th>
-                        <th>Dueño</th>
+                        <th>Chip</th>
                         <th>Tipo</th>
                     </tr>
                 </thead>

@@ -135,11 +135,12 @@ function modificar_mascota()
 }
 
 // Modificar clientes
-function modificar_clientes()
+function modificar_clientes($nombre, $ape1, $ape2, $telefono, $correo)
 {
     global $pdo;
+    $dni = $_SESSION["user"];
     try {
-        $sql = "UPDATE agenda SET emailContacto='jjjj@gmail.com' WHERE emailContacto='jose@gmail.com'";
+        $sql = "UPDATE clientes SET nombre='$nombre', ape1='$ape1', ape2='$ape2', telefono='$telefono', correo='$correo' WHERE dni ='$dni'";
         $filasModificadas = $pdo->exec($sql);
         echo "Se han modificado $filasModificadas filas<br/>";
     } catch (PDOException $excepcion) {
@@ -314,7 +315,7 @@ function mostrarMascotas($mascotas) {
     echo "<td>" . $info["nombre"] . "</td>";
     echo "<td>" . $info["edad"] . "</td>";
     echo "<td>" . $info["sexo"] . "</td>";
-    echo "<td>" . $info["dni_duenio"] . "</td>";
+    echo "<td>" . $info["chip"] . "</td>";
     echo "<td>" . $info["tipo_animal"] . "</td>";
     echo "</tr>";   
 }
