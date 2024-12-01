@@ -5,6 +5,8 @@ include_once "./../funciones/funciones_bd.php";
 
 session_start();
 
+chequear_usuario();
+
 connect_agenda();
 
 select_cliente();
