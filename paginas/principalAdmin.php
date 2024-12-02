@@ -7,6 +7,18 @@ session_start();
 
 chequear_usuario();
 
+// variables para la autenticacion de admin
+$rol_admin = "A";
+$ruta_user = "./principalUser.php";
+
+// variables para la autenticacion de registrado
+$rol_user = "R";
+$ruta_admin = "./principalAdmin.php";
+
+// Funciones roles
+chequear_rol_admin($rol_admin, $ruta_user);
+chequear_rol_user($rol_user, $ruta_admin);
+
 connect_agenda();
 
 select_cliente();
