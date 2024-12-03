@@ -7,18 +7,6 @@ session_start();
 
 chequear_usuario();
 
-// variables para la autenticacion de admin
-$rol_admin = "A";
-$ruta_user = "./principalUser.php";
-
-// variables para la autenticacion de registrado
-$rol_user = "R";
-$ruta_admin = "./principalAdmin.php";
-
-// Funciones roles
-chequear_rol_admin($rol_admin, $ruta_user);
-chequear_rol_user($rol_user, $ruta_admin);
-
 connect_agenda();
 
 select_cliente();
@@ -42,12 +30,14 @@ if (isset($_POST["eliminar"])) {
         echo "eliminar";
     }
 }
+
 ?>
 
 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -83,7 +73,7 @@ if (isset($_POST["eliminar"])) {
                 <button class="list__item" type="submit">Insertar vacuna</button>
             </form>
 
-             <!------------------------MODIFICAR ------------------------>
+            <!------------------------MODIFICAR ------------------------>
             <!-- modificar cliente-->
             <form action="#" method="post" class="list">
                 <input type="hidden" name="modificarCliente" value="modificar">
@@ -96,14 +86,14 @@ if (isset($_POST["eliminar"])) {
                 <button class="list__item" type="submit">Modificar mascota</button>
             </form>
 
-            
+
             <!-- modificar vacuna -->
             <form action="#" method="post" class="list">
                 <input type="hidden" name="modificarVacuna" value="modificar">
                 <button class="list__item" type="submit">Modificar vacuna</button>
             </form>
 
-          
+
             <!-- eliminar cliente-->
             <form action="#" method="post" class="list">
                 <input type="hidden" name="eliminarCliente" value="modificar">
@@ -125,80 +115,214 @@ if (isset($_POST["eliminar"])) {
         </aside>
         <main class="main">
             <?php
-                if(isset($_POST["insertarCliente"]) && $_POST["insertarCliente"]) { ?>
-                    <form action="./insertarCliente.php" method="get" class="formularioEditar">
-                        <div class="input-group">
-                            <label for="nombre">DNI</label>
-                            <input type="text" id="dni" name="dni">
-                        </div>
-                        <div class="input-group">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" id="nombre" name="nombre">
-                        </div>
-                        <div class="input-group">
-                            <label for="ape1">Primer Apellido</label>
-                            <input type="text" id="ape1" name="ape1">
-                        </div>
-                        <div class="input-group">
-                            <label for="ape2">Segundo Apellido</label>
-                            <input type="text" id="ape2" name="ape2">
-                        </div>
-                        <div class="input-group">
-                            <label for="telefono">Telefono</label>
-                            <input type="text" id="telefono" name="telefono">
-                        </div>
-                        <div class="input-group">
-                            <label for="correo">Correo</label>
-                            <input type="text" id="correo" name="correo" >
-                        </div>
-                        <div class="input-group">
-                            <label for="contraseña">Contraseña</label>
-                            <input type="text" id="contraseña" name="contraseña" >
-                        </div>
+            echo (isset($_GET["insert"]) && $_GET["insert"] == "true") ? "<p class='alert-usuarioRegistrado'>La acción se realizó correctamente</p>" : "";
 
-                        
-                        <button type="submit">Guardar Cambios</button>
-                        <button type="reset">Mantener Cambios</button>
-                    </form>
-                <?php } ?>
+            ?>
 
-                <?php
-                if(isset($_POST["insertarMascota"]) && $_POST["insertarMascota"]) { ?>
-                    <!-- <form action="./insertarCliente.php" method="get" class="formularioEditar">
-                        <div class="input-group">
-                            <label for="nombre">DNI</label>
-                            <input type="text" id="dni" name="dni">
-                        </div>
-                        <div class="input-group">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" id="nombre" name="nombre">
-                        </div>
-                        <div class="input-group">
-                            <label for="ape1">Primer Apellido</label>
-                            <input type="text" id="ape1" name="ape1">
-                        </div>
-                        <div class="input-group">
-                            <label for="ape2">Segundo Apellido</label>
-                            <input type="text" id="ape2" name="ape2">
-                        </div>
-                        <div class="input-group">
-                            <label for="telefono">Telefono</label>
-                            <input type="text" id="telefono" name="telefono">
-                        </div>
-                        <div class="input-group">
-                            <label for="correo">Correo</label>
-                            <input type="text" id="correo" name="correo" >
-                        </div>
-                        <div class="input-group">
-                            <label for="contraseña">Contraseña</label>
-                            <input type="text" id="contraseña" name="contraseña" >
-                        </div>
 
-                        
-                        <button type="submit">Guardar Cambios</button>
-                        <button type="reset">Mantener Cambios</button>
-                    </form> -->
-                <?php } ?>
+            <!-- INSERTAR -->
+            <!-- insertar cliente -->
+            <?php
+            if (isset($_POST["insertarCliente"]) && $_POST["insertarCliente"]) { ?>
+                <form action="./insert.php" method="get" class="formularioEditar">
+                    <div class="input-group">
+                        <label for="nombre">DNI</label>
+                        <input type="text" id="dni" name="dni">
+                    </div>
+                    <div class="input-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre">
+                    </div>
+                    <div class="input-group">
+                        <label for="ape1">Primer Apellido</label>
+                        <input type="text" id="ape1" name="ape1">
+                    </div>
+                    <div class="input-group">
+                        <label for="ape2">Segundo Apellido</label>
+                        <input type="text" id="ape2" name="ape2">
+                    </div>
+                    <div class="input-group">
+                        <label for="telefono">Telefono</label>
+                        <input type="text" id="telefono" name="telefono">
+                    </div>
+                    <div class="input-group">
+                        <label for="correo">Correo</label>
+                        <input type="text" id="correo" name="correo">
+                    </div>
+                    <div class="input-group">
+                        <label for="contraseña">Contraseña</label>
+                        <input type="text" id="contraseña" name="contraseña">
+                    </div>
+
+
+                    <button type="submit">Guardar Cambios</button>
+                    <button type="reset">Mantener Cambios</button>
+                </form>
+            <?php } ?>
+
+
+            <!-- insertar mascota -->
+            <?php
+            if (isset($_POST["insertarMascota"]) && $_POST["insertarMascota"]) { ?>
+                <form action="./insert.php" method="post" class="formularioEditar">
+                    <div class="input-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre">
+                    </div>
+                    <div class="input-group">
+                        <label for="edad">Edad</label>
+                        <input type="text" id="edad" name="edad">
+                    </div>
+                    <div class="radio-group">
+                        <label for="chip">Chip</label>
+                        <input type="radio" name="chip" id="chip" value="1">Si
+                        <input type="radio" name="chip" id="chip" value="0">No
+                    </div>
+                    <div class="radio-group">
+                        <label for="sexo">Sexo</label>
+                        <input type="radio" name="sexo" id="sexo" value="F">Hembra
+                        <input type="radio" name="sexo" id="sexo" value="M">Macho
+                    </div>
+                    <div class="input-group">
+                        <label for="tipo_animal">Tipo animal</label>
+                        <input type="text" id="tipo_animal" name="tipo_animal">
+                    </div>
+                    <div class="input-group">
+                        <label for="dni_dueño">DNI dueño</label>
+                        <select name="dni_dueño" id="select-insert-animal">
+                            <option value="" selected disabled></option>
+                            <?php
+                            crearClienteOptions();
+                            ?>
+                        </select>
+                    </div>
+
+
+                    <button type="submit">Guardar Cambios</button>
+                    <button type="reset">Mantener Cambios</button>
+                </form>
+            <?php } ?>
+
+
+            <!-- insertar vacuna -->
+            <?php
+            if (isset($_POST["insertarVacuna"]) && $_POST["insertarVacuna"]) { ?>
+                <form action="./insert.php" method="post" class="formularioEditar">
+                    <div class="input-group">
+                        <label for="nombre_vacuna">Nombre vacuna</label>
+                        <input type="text" id="nombre_vacuna" name="nombre_vacuna">
+                    </div>
+                    <div class="radio-group">
+                        <label for="obligatoria">Obligatoria</label>
+                        <input type="radio" name="obligatoria" id="obligatoria" value="1">Si
+                        <input type="radio" name="obligatoria" id="obligatoria" value="0">No
+                    </div>
+
+                    <button type="submit">Guardar Cambios</button>
+                    <button type="reset">Mantener Cambios</button>
+                </form>
+            <?php } ?>
+
+
+            <!-- MODIFICAR -->
+            <!-- modificar Cliente -->
+            <!-- Formulario cambio de datos del cliente -->
+
+            <?php
+            if (isset($_POST["modificarCliente"]) && $_POST["modificarCliente"]) { ?>
+            <form action="./modify.php" method="get" class="formularioEditar">
+                <div class="input-group">
+                    <label for="cliente">Selecciona el cliente que quieres modificar</label>
+                    <select name="cliente" id="select-modify-cliente">
+                        <option value="" selected disabled></option>
+                        <?php
+                        crearClienteOptions();
+                        ?>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" value=<?php echo (isset($_SESSION["nombre"])) ? $_SESSION["nombre"] : "" ?>>
+                </div>
+                <div class="input-group">
+                    <label for="ape1">Primer Apellido</label>
+                    <input type="text" id="ape1" name="ape1" value=<?php echo (isset($_SESSION["ape1"])) ? $_SESSION["ape1"] : "" ?>>
+                </div>
+                <div class="input-group">
+                    <label for="ape2">Segundo Apellido</label>
+                    <input type="text" id="ape2" name="ape2" value=<?php echo (isset($_SESSION["ape2"])) ? $_SESSION["ape2"] : "" ?>>
+                </div>
+                <div class="input-group">
+                    <label for="telefono">Telefono</label>
+                    <input type="text" id="telefono" name="telefono" value=<?php echo (isset($_SESSION["telefono"])) ? $_SESSION["telefono"] : "" ?>>
+                </div>
+                <div class="input-group">
+                    <label for="correo">Correo</label>
+                    <input type="text" id="correo" name="correo" value=<?php echo (isset($_SESSION["correo"])) ? $_SESSION["correo"] : "" ?>>
+                </div>
+
+
+                <button type="submit">Guardar Cambios</button>
+                <button type="reset">Mantener Cambios</button>
+            </form>
+            <?php } ?>
+
+
+
+            <!-- ELIMINAR -->
+            <!-- Eliminar cliente -->
+            <?php
+            if (isset($_POST["eliminarCliente"]) && $_POST["eliminarCliente"]) { ?>
+                <form action="./delete.php" method="get" class="formularioEditar">
+                    <label for="cliente">Selecciona el cliente que quieres borrar</label>
+                    <select name="cliente" id="select-delete-cliente">
+                        <option value="" selected disabled></option>
+                        <?php
+                        crearClienteOptions();
+                        ?>
+                    </select>
+
+                    <br>
+                    <button type="submit">Eliminar cliente</button>
+                    <button type="reset">Resetear</button>
+                </form>
+            <?php } ?>
+
+            <!-- Eliminar mascota -->
+            <?php
+            if (isset($_POST["eliminarMascota"]) && $_POST["eliminarMascota"]) { ?>
+                <form action="./delete.php" method="get" class="formularioEditar">
+                    <label for="mascota">Selecciona la mascota que quieres borrar</label>
+                    <select name="mascota" id="select-delete-mascota">
+                        <option value="" selected disabled></option>
+                        <?php
+                        crearMascotaOptions();
+                        ?>
+                    </select>
+
+                    <br>
+                    <button type="submit">Eliminar mascota</button>
+                    <button type="reset">Resetear</button>
+                </form>
+            <?php } ?>
+
+            <!-- Eliminar vacuna -->
+            <?php
+            if (isset($_POST["eliminarVacuna"]) && $_POST["eliminarVacuna"]) { ?>
+                <form action="./delete.php" method="get" class="formularioEditar">
+                    <label for="vacuna">Selecciona la vacuna que quieres borrar</label>
+                    <select name="vacuna" id="select-delete-vacuna">
+                        <option value="" selected disabled></option>
+                        <?php
+                        crearVacunaOptions();
+                        ?>
+                    </select>
+
+                    <br>
+                    <button type="submit">Eliminar vacuna</button>
+                    <button type="reset">Resetear</button>
+                </form>
+            <?php } ?>
         </main>
         <footer class="footer">
             <div class="footer-content">
@@ -210,4 +334,5 @@ if (isset($_POST["eliminar"])) {
         </footer>
 
     </container>
+
 </html>

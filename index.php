@@ -22,10 +22,11 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
 
                 if ($_POST["user"] == "admin") {
                     header("Location: ./paginas/principalAdmin.php");
+                    exit();
                 } else {
                     header("Location: ./paginas/principalUser.php");
+                    exit();
                 }
-                exit();
             } else {
                 array_push($errores, "El usuario y la contraseña no coinciden");
             }

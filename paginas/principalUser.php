@@ -56,6 +56,8 @@ select_cliente();
 
             <?php if (isset($_POST["editar"])){     ?>
 
+
+            <!-- Formulario cambio de datos del cliente -->
             <form action="./cambioDatos.php" method="get" class="formularioEditar">
                 <div class="input-group">
                     <label for="nombre">Nombre</label>
@@ -81,7 +83,7 @@ select_cliente();
                 
                 <button type="submit">Guardar Cambios</button>
                 <button type="reset">Mantener Cambios</button>
-                </form>
+            </form>
 
 
 

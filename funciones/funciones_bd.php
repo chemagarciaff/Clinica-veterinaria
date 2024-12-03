@@ -105,16 +105,29 @@ function insert_cliente($dni, $nombre, $ape1, $ape2, $telefono, $email)
 }
 
 // Insertar mascotas
-function insert_animales($nombre, $edad, $sexo, $tipo_animal, $dni_duenio)
+function insert_animales($nombre, $edad, $chip, $sexo, $tipo_animal, $dni_duenio)
 {
     global $pdo;
     try {
-        $filasInsertadas = $pdo->exec("INSERT INTO animales (nombre, edad, sexo, tipo_animal, dni_duenio) 
-        VALUES('$nombre', '$edad', '$sexo', '$tipo_animal', '$dni_duenio')");
-        echo "Se ha añadido $filasInsertadas cliente<br />";
+        $filasInsertadas = $pdo->exec("INSERT INTO animales (nombre, edad, chip, sexo, tipo_animal, dni_duenio) VALUES('$nombre', '$edad', '$chip', '$sexo', '$tipo_animal', '$dni_duenio')");
+        echo "Se ha añadido $filasInsertadas animales<br />";
         return true;
     } catch (PDOException $excepcion) {
-        echo "Error en la inserción de tipo " . $excepcion->getMessage();
+        echo "Error en la inserción: " . $excepcion->getMessage();
+        return false;
+    }
+}
+
+// Insertar vacuna
+function insert_vacunas($nombre_vacuna, $obligatoria)
+{
+    global $pdo;
+    try {
+        $filasInsertadas = $pdo->exec("INSERT INTO vacunas (nombre_vacuna, obligatoria) VALUES('$nombre_vacuna', '$obligatoria')");
+        echo "Se ha añadido $filasInsertadas vacuna<br />";
+        return true;
+    } catch (PDOException $excepcion) {
+        echo "Error en la inserción de tipo: " . $excepcion->getMessage();
         return false;
     }
 }
@@ -173,12 +186,31 @@ function eliminar_cliente($dni)
     try {
 
         $sql1= "DELETE FROM clientes WHERE dni = '$dni'";
-        $sql2 = "DELETE FROM usuarios WHERE user = '$dni'";
         $stmt1 = $pdo->prepare($sql1);
-        $stmt2 = $pdo->prepare($sql2);
 
         $stmt1->execute();
         $filasBorradas = $stmt1->rowCount();
+
+        if ($filasBorradas > 0) {
+            echo "Se ha eliminado el contacto con DNI: $dni<br/>";
+            return true;
+        } else {
+            echo "No se encontró ningún contacto con el DNI proporcionado.<br/>";
+            return false;
+        }
+    } catch (PDOException $excepcion) {
+        echo "Error en el borrado: " . $excepcion->getMessage();
+        return false;
+    }
+}
+
+function eliminar_usuario($dni)
+{
+    global $pdo;
+    try {
+
+        $sql2 = "DELETE FROM usuarios WHERE user = '$dni'";
+        $stmt2 = $pdo->prepare($sql2);
 
         $stmt2->execute();
         $filasBorradas = $stmt2->rowCount();
@@ -308,24 +340,9 @@ function select_mascotas($user)
 }
 
 
-function mostrarMascotas($mascotas) {
-   foreach ($mascotas as $indice => $info) {
-
-    echo "<tr>";
-    echo "<td>" . $info["nombre"] . "</td>";
-    echo "<td>" . $info["edad"] . "</td>";
-    echo "<td>" . $info["sexo"] . "</td>";
-    echo "<td>" . $info["chip"] . "</td>";
-    echo "<td>" . $info["tipo_animal"] . "</td>";
-    echo "</tr>";   
-}
-}
-
 
 function comprobarCambiosPerfil() {
     session_start();
-    print_r($_GET);
-    print_r($_SESSION);
     if ($_GET["nombre"] == $_SESSION["nombre"]){
         if ($_GET["ape1"] == $_SESSION["ape1"]){
             if ($_GET["ape2"] == $_SESSION["ape2"]){
