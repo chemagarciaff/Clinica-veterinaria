@@ -44,7 +44,7 @@ function crearMascotaOptions() {
         $sql = "SELECT * FROM animales";
         $lista = $pdo->query($sql);
         while ($animal = $lista->fetch()) {
-            echo "<option value = " . $animal["ID"] . ">".$animal["ID"] ." - " . $animal["nombre"] . "</option>";
+            echo "<option value = " . $animal["ID"] . ">".$animal["dni_duenio"] ." - " . $animal["nombre"] . "</option>";
         }
     } catch (PDOException $excepcion) {
         echo "Error en la consulta de tipo " . $excepcion->getMessage();

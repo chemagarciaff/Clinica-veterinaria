@@ -14,6 +14,7 @@ function connect_agenda()
     }
 }
 
+
 // -------------------------------------------------COMPROBAR---------------------------------------
 
 
@@ -283,24 +284,6 @@ function eliminar_vacuna($nombre_vacuna)
 }
 
 // -------------------------------------------------SELECCIONAR---------------------------------------
-
-// consultas
-// seleccionar usuario
-function select_user()
-{
-    global $pdo;
-    try {
-        $sql = "SELECT * FROM usuarios";
-        $lista = $pdo->query($sql);
-        while ($usuario = $lista->fetch()) {
-            echo "Nombre: " . $usuario['user'];
-            echo "password: " . $usuario['password'];
-        }
-    } catch (PDOException $excepcion) {
-        echo "Error en la consulta de tipo " . $excepcion->getMessage();
-    }
-}
-
 // seleccionar clientes
 function select_cliente()
 {
@@ -322,6 +305,20 @@ function select_cliente()
     }
 }
 
+
+function select_cliente2($dni)
+{
+    global $pdo;
+    try {
+        $sql = "SELECT * FROM clientes where dni = '$dni'";
+        $lista = $pdo->query($sql);
+        $cliente = $lista->fetch();
+        return $cliente;
+    } catch (PDOException $excepcion) {
+        echo "Error en la consulta de tipo " . $excepcion->getMessage();
+    }
+}
+
 function select_mascotas($user)
 {
     global $pdo;
@@ -334,6 +331,32 @@ function select_mascotas($user)
             return [];
         }
         return $lista;
+    } catch (PDOException $excepcion) {
+        return 'Ha ocurrido una excepcion '. $excepcion;
+    }
+}
+
+function select_mascotas2($id)
+{
+    global $pdo;
+    try {
+        $sql = "SELECT * FROM animales WHERE ID = '$id'";
+        $lista = $pdo->query($sql);
+        $animal = $lista->fetch();
+        return $animal;
+    } catch (PDOException $excepcion) {
+        return 'Ha ocurrido una excepcion '. $excepcion;
+    }
+}
+
+function select_vacuna2($nombre)
+{
+    global $pdo;
+    try {
+        $sql = "SELECT * FROM vacunas WHERE nombre_vacuna = '$nombre'";
+        $lista = $pdo->query($sql);
+        $vacuna = $lista->fetch();
+        return $vacuna;
     } catch (PDOException $excepcion) {
         return 'Ha ocurrido una excepcion '. $excepcion;
     }
