@@ -19,11 +19,14 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
 
                 $_SESSION["user"] = $_POST["user"];
                 $_SESSION["password"] = $_POST["password"];
-
+                
                 if ($_POST["user"] == "admin") {
+                    $_SESSION["rol"] = "A";
+                    
                     header("Location: ./paginas/principalAdmin.php");
                     exit();
                 } else {
+                    $_SESSION["rol"] = "R";
                     header("Location: ./paginas/principalUser.php");
                     exit();
                 }

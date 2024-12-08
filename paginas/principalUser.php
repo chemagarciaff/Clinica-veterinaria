@@ -3,18 +3,23 @@
 include_once "./../funciones/funciones.php";
 include_once "./../funciones/funciones_bd.php";
 
+// Iniciar la sesión
 session_start();
 
+// Verificar si el usuario está autenticado
 chequear_usuario();
 
+// Verificar si el usuario tiene el rol de registrado ('R'), si no va a la página principal de admin
+chequear_rol('R', './principalAdmin.php');
+
+// Establecer la conexión con la base de datos 
 connect_agenda();
 
+
+// Seleccionar los datos del cliente
 select_cliente();
 
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -84,9 +89,6 @@ select_cliente();
                 <button type="submit">Guardar Cambios</button>
                 <button type="reset">Mantener Cambios</button>
             </form>
-
-
-
 
 
 

@@ -3,12 +3,19 @@
 include_once "./../funciones/funciones.php";
 include_once "./../funciones/funciones_bd.php";
 
+// Iniciar la sesión
 session_start();
 
-// chequear_usuario();
+// Verificar si el usuario está autenticado
+chequear_usuario();
 
+// Verificar si el usuario tiene el rol de administrador ('A'), si no va a la página principal de usuario
+chequear_rol('A', './principalUser.php');
+
+// Establecer la conexión con la base de datos 
 connect_agenda();
 
+// Seleccionar los datos del cliente
 select_cliente();
 
 ?>
@@ -124,7 +131,7 @@ select_cliente();
                         !isset($_GET["eliminarVacuna"]) ) ? "<p class='opcion'>Elige una opcion...</p>" : "" ?>
 
 
-            <!-- INSERTAR -->
+             <!------------------------INSERTAR ------------------------>
             <!-- formulario insertar cliente -->
             <?php
             if (isset($_POST["insertarCliente"]) && $_POST["insertarCliente"]) { ?>
@@ -229,7 +236,7 @@ select_cliente();
 
 
 
-            <!-- MODIFICAR -->
+            <!-------------------------- MODIFICAR ------------------>
             <!-- formulario modificar Cliente -->
             <?php
             if ((isset($_POST["modificarCliente"]) && $_POST["modificarCliente"]) || isset($_GET["modificarCliente"])) { ?>
@@ -375,7 +382,7 @@ select_cliente();
                 </form>
             <?php } ?>
 
-            <!-- ELIMINAR -->
+        <!------------------------ELIMINAR ------------------------>
             <!-- formulario Eliminar cliente -->
             <?php
             if (isset($_POST["eliminarCliente"]) && $_POST["eliminarCliente"]) { ?>
