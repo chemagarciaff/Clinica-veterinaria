@@ -74,6 +74,23 @@ function comprobarCoincidencia($user, $password)
     }
 }
 
+function comprobarUsuarioRegistrado($dni)
+{
+    global $pdo;
+    try {
+        $sql = "SELECT * FROM usuarios";
+        $lista = $pdo->query($sql);
+        while ($usuario = $lista->fetch()) {
+            if ($usuario["user"] == $dni) {
+                return false;
+            }
+        }
+        return true;
+    } catch (PDOException $excepcion) {
+        echo "Usuario y contraseña no coinciden";
+        $excepcion->getMessage();
+    }
+}
 
 // -------------------------------------------------INSERCCIONES---------------------------------------
 
@@ -136,11 +153,11 @@ function insert_vacunas($nombre_vacuna, $obligatoria)
 // -------------------------------------------------MODIFICAR---------------------------------------
 
 // Modificar mascotas 
-function modificar_mascota()
+function modificar_mascota($nombre, $edad, $chip, $sexo, $tipo_animal, $id)
 {
     global $pdo;
     try {
-        $sql = "UPDATE agenda SET emailContacto='jjjj@gmail.com' WHERE emailContacto='jose@gmail.com'";
+        $sql = "UPDATE animales SET nombre='$nombre', edad='$edad', chip='$chip', sexo='$sexo', tipo_animal='$tipo_animal' WHERE id ='$id'";
         $filasModificadas = $pdo->exec($sql);
         echo "Se han modificado $filasModificadas filas<br/>";
     } catch (PDOException $excepcion) {
@@ -149,31 +166,29 @@ function modificar_mascota()
 }
 
 // Modificar clientes
-function modificar_clientes($nombre, $ape1, $ape2, $telefono, $correo)
+function modificar_clientes($nombre, $ape1, $ape2, $telefono, $correo, $dni)
 {
     global $pdo;
-    $dni = $_SESSION["user"];
     try {
         $sql = "UPDATE clientes SET nombre='$nombre', ape1='$ape1', ape2='$ape2', telefono='$telefono', correo='$correo' WHERE dni ='$dni'";
         $filasModificadas = $pdo->exec($sql);
-        echo "Se han modificado $filasModificadas filas<br/>";
+        echo $filasModificadas;
     } catch (PDOException $excepcion) {
-        echo "Error en la modificación de tipo " . $excepcion->getMessage();
     }
 }
 
-// Modificar mascotas 
-function modificar_vacunas()
+
+// Modificar clientes
+function modificar_vacunas($nombre, $obligatoria)
 {
     global $pdo;
     try {
-        $sql = "UPDATE agenda SET emailContacto='jjjj@gmail.com' WHERE emailContacto='jose@gmail.com'";
+        $sql = "UPDATE vacunas SET obligatoria='$obligatoria' WHERE nombre_vacuna ='$nombre'";
         $filasModificadas = $pdo->exec($sql);
-        echo "Se han modificado $filasModificadas filas<br/>";
     } catch (PDOException $excepcion) {
-        echo "Error en la modificación de tipo " . $excepcion->getMessage();
     }
 }
+
 
 
 // -------------------------------------------------ELIMINAR---------------------------------------

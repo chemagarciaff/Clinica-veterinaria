@@ -22,6 +22,7 @@ $patron_password = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/";
 
 
 $comprobadorRegistro = true;
+connect_agenda();
 
 //compruebo si he recibido una petición POST
 if (($_SERVER["REQUEST_METHOD"] == "POST")) {
@@ -41,17 +42,24 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
                     //Comprobamos que las contraseñas coinciden
                     if ($_POST["password"] == $_POST["confirmPassword"]) {
 
-                        connect_agenda();
+                        if (comprobarUsuarioRegistrado($_POST["dni"])) {
 
-                        //Hacemos las insercciones en usuarios y en clientes
-                        if (
-                            insert_cliente($_POST["dni"], $_POST["nombre"], $_POST["ape1"], $_POST["ape2"], $_POST["telefono"], $_POST["email"])
-                            && insert_user($_POST["dni"], $_POST["password"], $_POST["email"])
-                        ) {
 
-                            header("Location: ../index.php?insert=true");
-                        } else {
+                            
 
+                            //Hacemos las insercciones en usuarios y en clientes
+                            if (
+                                insert_cliente($_POST["dni"], $_POST["nombre"], $_POST["ape1"], $_POST["ape2"], $_POST["telefono"], $_POST["email"])
+                                && insert_user($_POST["dni"], $_POST["password"], $_POST["email"])
+                            ) {
+
+                                header("Location: ../index.php?insert=true");
+                            } else {
+
+                                $comprobadorRegistro = false;
+                            }
+                        }else {
+                            $_ERROR["userRegistrado"] = "Ya hay un usuario con ese DNI";
                             $comprobadorRegistro = false;
                         }
                     } else {
@@ -93,12 +101,13 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
         <h1 class="title">Clinica Veterinaria</h1>
         <h3 class="subtitle">Registro</h3>
         <div class="alert-usuarioNoRegistrado" style="display: " <?php echo (!$comprobadorRegistro) ? "" : "hidden" ?>>Registro Fallido</div>
+        <?php echo isset($_ERROR["userRegistrado"]) ? '<p class="register-error"> ' . $_ERROR["userRegistrado"] . '</p>' : "" ?>
         <form action="#" method="post">
             <div class="input-group">
                 <label for="email">Correo electronico *</label>
                 <input type="email" id="email" name="email" required value=<?php echo isset($_POST["email"]) ? $_POST["email"] : ""; ?>>
             </div>
-            <?php echo isset($_ERROR["email"]) ? '<p class="register-error"> '.$_ERROR["email"].'</p>' : ""?>
+            <?php echo isset($_ERROR["email"]) ? '<p class="register-error"> ' . $_ERROR["email"] . '</p>' : "" ?>
             <div class="row-group">
 
                 <div class="input-group">
@@ -110,8 +119,8 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
                     <input type="password" id="confirmPassword" name="confirmPassword" required value=<?php echo isset($_POST["confirmPassword"]) ? $_POST["confirmPassword"] : ""; ?>>
                 </div>
             </div>
-            <?php echo isset($_ERROR["password"]) ? '<p class="register-error"> '.$_ERROR["password"].'</p>' : ""?>
-            
+            <?php echo isset($_ERROR["password"]) ? '<p class="register-error"> ' . $_ERROR["password"] . '</p>' : "" ?>
+
             <div class="row-group">
 
                 <div class="input-group">
@@ -123,7 +132,7 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
                     <input type="text" id="nombre" name="nombre" required value=<?php echo isset($_POST["nombre"]) ? $_POST["nombre"] : ""; ?>>
                 </div>
             </div>
-            <?php echo isset($_ERROR["dni"]) ? '<p class="register-error"> '.$_ERROR["dni"].'</p>' : ""?>
+            <?php echo isset($_ERROR["dni"]) ? '<p class="register-error"> ' . $_ERROR["dni"] . '</p>' : "" ?>
 
             <div class="row-group">
 
@@ -142,7 +151,7 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
                 <label for="telefono">Telefono *</label>
                 <input type="text" id="telefono" name="telefono" required value=<?php echo isset($_POST["telefono"]) ? $_POST["telefono"] : ""; ?>>
             </div>
-            <?php echo isset($_ERROR["telefono"]) ? '<p class="register-error"> '.$_ERROR["telefono"].'</p>' : ""?>
+            <?php echo isset($_ERROR["telefono"]) ? '<p class="register-error"> ' . $_ERROR["telefono"] . '</p>' : "" ?>
 
             <div class="input-group">
                 <input type="submit" value="Registrar">

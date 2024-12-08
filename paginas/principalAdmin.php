@@ -99,6 +99,9 @@ select_cliente();
             <?php
             echo (isset($_GET["insert"]) && $_GET["insert"] == "true") ? "<p class='alert-usuarioRegistrado'>La acción se realizó correctamente</p>" : "";
             ?>
+            <?php
+            echo (isset($_GET["modify"]) && $_GET["modify"] == "true") ? "<p class='alert-usuarioRegistrado'>La acción se realizó correctamente</p>" : "";
+            ?>
 
             <!-- Mensaje que aparece cuando no se ha seleccionado ninguna accion -->
             <?php echo (!isset($_POST["insertarCliente"]) &&
@@ -233,22 +236,26 @@ select_cliente();
                 <form action="./modify.php" method="get" class="formularioEditar">
                     <div class="input-group">
                         <label for="cliente">Selecciona el cliente que quieres modificar</label>
-                        <select name="cliente" id="select-modify-cliente"
-                            value=<?php echo isset($_GET["modificarCliente"]) ? select_cliente2($_GET["cliente"])["dni"] : ""   ?>>>
+                        <select name="cliente" id="select-modify-cliente">
                             <option value="" disabled selected></option>
                             <?php
-                            crearClienteOptions();
+                            crearClienteOptions(isset($_GET["modificarCliente"]) ? select_cliente2($_GET["cliente"])["dni"] : "" );
                             ?>
                         </select>
                     </div>
                     <div class="input-group">
+                        <label for="dni">DNI  (no modificable)</label>
+                        <input type="text" id="modifyClienteDNI" name="dni" required readonly
+                            value=<?php echo isset($_GET["modificarCliente"]) ? select_cliente2($_GET["cliente"])["dni"] : ""   ?>>
+                    </div>
+                    <div class="input-group">
                         <label for="nombre">Nombre</label>
-                        <input type="text" id="modifyClienteNombre" name="nombre"
+                        <input type="text" id="modifyClienteNombre" name="nombre" required
                             value=<?php echo isset($_GET["modificarCliente"]) ? select_cliente2($_GET["cliente"])["nombre"] : ""   ?>>
                     </div>
                     <div class="input-group">
                         <label for="ape1">Primer Apellido</label>
-                        <input type="text" id="modifyClienteApe1" name="ape1"
+                        <input type="text" id="modifyClienteApe1" name="ape1" required
                             value=<?php echo isset($_GET["modificarCliente"]) ? select_cliente2($_GET["cliente"])["ape1"] : ""   ?>>
                     </div>
                     <div class="input-group">
@@ -258,12 +265,12 @@ select_cliente();
                     </div>
                     <div class="input-group">
                         <label for="telefono">Telefono</label>
-                        <input type="text" id="modifyClienteTelefono" name="telefono"
+                        <input type="text" id="modifyClienteTelefono" name="telefono" required
                             value=<?php echo isset($_GET["modificarCliente"]) ? select_cliente2($_GET["cliente"])["telefono"] : ""   ?>>
                     </div>
                     <div class="input-group">
                         <label for="correo">Correo</label>
-                        <input type="text" id="modifyClienteCorreo" name="correo"
+                        <input type="email" id="modifyClienteCorreo" name="correo" required
                             value=<?php echo isset($_GET["modificarCliente"]) ? select_cliente2($_GET["cliente"])["correo"] : ""   ?>>
                     </div>
 
@@ -279,7 +286,7 @@ select_cliente();
             if ((isset($_POST["modificarMascota"]) && $_POST["modificarMascota"]) || isset($_GET["modificarMascota"])) { ?>
                 <form action="./modify.php" method="get" class="formularioEditar">
                     <div class="input-group">
-                        <label for="cliente">Selecciona la msacota que quieres modificar</label>
+                        <label for="cliente">Selecciona la mascota que quieres modificar</label>
                         <select name="mascota" id="select-modify-mascota"
                             value=<?php echo isset($_GET["modificarMascota"]) ? select_cliente2($_GET["mascota"])["ID"] : ""   ?>>>
                             <option value="" disabled selected></option>
@@ -287,6 +294,11 @@ select_cliente();
                             crearMascotaOptions();
                             ?>
                         </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="nombre">Id (no modificable)</label>
+                        <input type="text" id="id" name="id" readonly
+                            value=<?php echo isset($_GET["modificarMascota"]) ? select_mascotas2($_GET["mascota"])["ID"] : ""   ?>>
                     </div>
                     <div class="input-group">
                         <label for="nombre">Nombre</label>
@@ -344,8 +356,8 @@ select_cliente();
                         </select>
                     </div>
                     <div class="input-group">
-                        <label for="nombre_vacuna">Nombre vacuna</label>
-                        <input type="text" id="nombre_vacuna" name="nombre_vacuna"
+                        <label for="nombre_vacuna">Nombre vacuna (no modificable)</label>
+                        <input type="text" id="nombre_vacuna" name="nombre_vacuna" readonly
                             value=<?php echo isset($_GET["modificarVacuna"]) ? select_vacuna2($_GET["vacuna"])["nombre_vacuna"] : ""   ?>>
                     </div>
                     <div class="radio-group">
