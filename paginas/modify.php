@@ -8,18 +8,28 @@ session_start();
 // Establecer la conexión con la base de datos 
 connect_agenda();
 
-print_r($_GET);
 
 // Modificación de datos de clientes
 if(isset($_GET["ape1"])){
-    //LLamada a la funcion modificar_clientes
-    modificar_clientes($_GET["nombre"], $_GET["ape1"], $_GET["ape2"], $_GET["telefono"], $_GET["correo"], $_GET["dni"]);
-    header("Location: ./principalAdmin.php?modify=true");
-    exit(); 
+
+    //Para usuarios
+    if(isset($_GET["typeUser"])){
+        modificar_clientes($_GET["nombre"], $_GET["ape1"], $_GET["ape2"], $_GET["telefono"], $_GET["correo"], $_SESSION["user"]);
+        header("Location: ./principalUser.php?modify=true");
+        exit(); 
+
+    //Para admin
+    } else {
+        modificar_clientes($_GET["nombre"], $_GET["ape1"], $_GET["ape2"], $_GET["telefono"], $_GET["correo"], $_GET["dni"]);
+        header("Location: ./principalAdmin.php?modify=true");
+        exit(); 
+    }
+
 }
 
 // Modificación de datos de mascotas
 if(isset($_GET["edad"])){
+
     // Llamar a la función modificar_mascota
     modificar_mascota($_GET["nombre"], $_GET["edad"], $_GET["chip"], $_GET["sexo"], $_GET["tipo_animal"], $_GET["id"]);
     header("Location: ./principalAdmin.php?modify=true");

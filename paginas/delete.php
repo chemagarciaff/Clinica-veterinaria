@@ -15,7 +15,7 @@ if(isset($_GET["cliente"])){
     eliminar_cliente($_GET["cliente"]);
     
     // Redirige a la página principal del administrador
-    header("Location: ./principalAdmin.php?insert=true");
+    header("Location: ./principalAdmin.php?delete=true");
     exit();
 }
 
@@ -24,7 +24,7 @@ if(isset($_GET["mascota"])){
     // Eliminar la mascota correspondiente de la base de datos
     eliminar_animal($_GET["mascota"]);
 
-    header("Location: ./principalAdmin.php?insert=true");
+    header("Location: ./principalAdmin.php?delete=true");
     exit();
 }
 
@@ -33,7 +33,7 @@ if(isset($_GET["vacuna"])){
     // Eliminar la vacuna correspondiente de la base de datos
     eliminar_vacuna($_GET["vacuna"]);
 
-    header("Location: ./principalAdmin.php?insert=true");
+    header("Location: ./principalAdmin.php?delete=true");
     exit();
 }
 ?>

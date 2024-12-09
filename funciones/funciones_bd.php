@@ -415,7 +415,7 @@ function select_cliente()
  * @param string $dni DNI del cliente a consultar.
  * @return array Los datos del cliente.
  */
-function select_cliente2($dni)
+function select_cliente_by_dni($dni)
 {
     global $pdo;
     try {
@@ -437,7 +437,7 @@ function select_cliente2($dni)
  * @param string $user El DNI del dueño de las mascotas.
  * @return array[] Lista de mascotas asociadas al usuario. Si no hay mascotas, devuelve un arreglo vacío.
  */
-function select_mascotas($user)
+function select_mascota_by_user($user)
 {
     global $pdo;
     try {
@@ -463,7 +463,7 @@ function select_mascotas($user)
  * @param int $id El ID de la mascota.
  * @return array|null Datos de la mascota si se encuentra, null si no se encuentra.
  */
-function select_mascotas2($id)
+function select_mascotas_by_id($id)
 {
     global $pdo;
     try {
@@ -482,7 +482,7 @@ function select_mascotas2($id)
  * @param string $nombre El nombre de la vacuna.
  * @return array|null Datos de la vacuna si se encuentra, null si no se encuentra.
  */
-function select_vacuna2($nombre)
+function select_vacuna_by_nombre($nombre)
 {
     global $pdo;
     try {
@@ -494,6 +494,7 @@ function select_vacuna2($nombre)
         return 'Ha ocurrido una excepcion '. $excepcion;
     }
 }
+
 
 /**
  * Compara los datos del perfil actual con los datos almacenados en la sesión para verificar si hay cambios.

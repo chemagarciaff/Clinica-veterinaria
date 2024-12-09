@@ -40,7 +40,10 @@ select_cliente();
             <h2 class="saludo">Bienvenido Admin</h2>
             <a href="./logout.php" class="btn-logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
         </header>
+
+        <!-- OPCIONES -->
         <aside class="aside">
+
             <!------------------------INSERTAR ------------------------>
             <!-- insertar cliente-->
             <form action="./principalAdmin.php" method="post" class="list">
@@ -81,6 +84,7 @@ select_cliente();
             </form>
 
 
+            <!------------------------ELIMINAR ------------------------>
             <!-- eliminar cliente-->
             <form action="./principalAdmin.php" method="post" class="list">
                 <input type="hidden" name="eliminarCliente" value="modificar">
@@ -100,14 +104,15 @@ select_cliente();
             </form>
 
         </aside>
+
+
         <main class="main">
 
             <!-- Mensaje que aparece cuando se ha hecho alguna modificación, inserccion o borrado de forma exitosa -->
             <?php
-            echo (isset($_GET["insert"]) && $_GET["insert"] == "true") ? "<p class='alert-usuarioRegistrado'>La acción se realizó correctamente</p>" : "";
-            ?>
-            <?php
+            echo (isset($_GET["insert"]) && $_GET["insert"] == "true") ? "<p class='alert-usuarioRegistrado'>La acción se realizó correctamente</p>" : "";    
             echo (isset($_GET["modify"]) && $_GET["modify"] == "true") ? "<p class='alert-usuarioRegistrado'>La acción se realizó correctamente</p>" : "";
+            echo (isset($_GET["delete"]) && $_GET["delete"] == "true") ? "<p class='alert-usuarioRegistrado'>La acción se realizó correctamente</p>" : "";
             ?>
 
             <!-- Mensaje que aparece cuando no se ha seleccionado ninguna accion -->
@@ -246,39 +251,39 @@ select_cliente();
                         <select name="cliente" id="select-modify-cliente">
                             <option value="" disabled selected></option>
                             <?php
-                            crearClienteOptions(isset($_GET["modificarCliente"]) ? select_cliente2($_GET["cliente"])["dni"] : "" );
+                            crearClienteOptions(isset($_GET["modificarCliente"]) ? select_cliente_by_dni($_GET["cliente"])["dni"] : "" );
                             ?>
                         </select>
                     </div>
                     <div class="input-group">
                         <label for="dni">DNI  (no modificable)</label>
                         <input type="text" id="modifyClienteDNI" name="dni" required readonly
-                            value=<?php echo isset($_GET["modificarCliente"]) ? select_cliente2($_GET["cliente"])["dni"] : ""   ?>>
+                            value=<?php echo isset($_GET["modificarCliente"]) ? select_cliente_by_dni($_GET["cliente"])["dni"] : ""   ?>>
                     </div>
                     <div class="input-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" id="modifyClienteNombre" name="nombre" required
-                            value=<?php echo isset($_GET["modificarCliente"]) ? select_cliente2($_GET["cliente"])["nombre"] : ""   ?>>
+                            value=<?php echo isset($_GET["modificarCliente"]) ? select_cliente_by_dni($_GET["cliente"])["nombre"] : ""   ?>>
                     </div>
                     <div class="input-group">
                         <label for="ape1">Primer Apellido</label>
                         <input type="text" id="modifyClienteApe1" name="ape1" required
-                            value=<?php echo isset($_GET["modificarCliente"]) ? select_cliente2($_GET["cliente"])["ape1"] : ""   ?>>
+                            value=<?php echo isset($_GET["modificarCliente"]) ? select_cliente_by_dni($_GET["cliente"])["ape1"] : ""   ?>>
                     </div>
                     <div class="input-group">
                         <label for="ape2">Segundo Apellido</label>
                         <input type="text" id="modifyClienteApe2" name="ape2"
-                            value=<?php echo isset($_GET["modificarCliente"]) ? select_cliente2($_GET["cliente"])["ape2"] : ""   ?>>
+                            value=<?php echo isset($_GET["modificarCliente"]) ? select_cliente_by_dni($_GET["cliente"])["ape2"] : ""   ?>>
                     </div>
                     <div class="input-group">
                         <label for="telefono">Telefono</label>
                         <input type="text" id="modifyClienteTelefono" name="telefono" required
-                            value=<?php echo isset($_GET["modificarCliente"]) ? select_cliente2($_GET["cliente"])["telefono"] : ""   ?>>
+                            value=<?php echo isset($_GET["modificarCliente"]) ? select_cliente_by_dni($_GET["cliente"])["telefono"] : ""   ?>>
                     </div>
                     <div class="input-group">
                         <label for="correo">Correo</label>
                         <input type="email" id="modifyClienteCorreo" name="correo" required
-                            value=<?php echo isset($_GET["modificarCliente"]) ? select_cliente2($_GET["cliente"])["correo"] : ""   ?>>
+                            value=<?php echo isset($_GET["modificarCliente"]) ? select_cliente_by_dni($_GET["cliente"])["correo"] : ""   ?>>
                     </div>
 
 
@@ -295,7 +300,7 @@ select_cliente();
                     <div class="input-group">
                         <label for="cliente">Selecciona la mascota que quieres modificar</label>
                         <select name="mascota" id="select-modify-mascota"
-                            value=<?php echo isset($_GET["modificarMascota"]) ? select_cliente2($_GET["mascota"])["ID"] : ""   ?>>>
+                            value=<?php echo isset($_GET["modificarMascota"]) ? select_cliente_by_dni($_GET["mascota"])["ID"] : ""   ?>>>
                             <option value="" disabled selected></option>
                             <?php
                             crearMascotaOptions();
@@ -305,40 +310,40 @@ select_cliente();
                     <div class="input-group">
                         <label for="nombre">Id (no modificable)</label>
                         <input type="text" id="id" name="id" readonly
-                            value=<?php echo isset($_GET["modificarMascota"]) ? select_mascotas2($_GET["mascota"])["ID"] : ""   ?>>
+                            value=<?php echo isset($_GET["modificarMascota"]) ? select_mascotas_by_id($_GET["mascota"])["ID"] : ""   ?>>
                     </div>
                     <div class="input-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" id="nombre" name="nombre"
-                            value=<?php echo isset($_GET["modificarMascota"]) ? select_mascotas2($_GET["mascota"])["nombre"] : ""   ?>>
+                            value=<?php echo isset($_GET["modificarMascota"]) ? select_mascotas_by_id($_GET["mascota"])["nombre"] : ""   ?>>
                     </div>
                     <div class="input-group">
                         <label for="edad">Edad</label>
                         <input type="text" id="edad" name="edad"
-                            value=<?php echo isset($_GET["modificarMascota"]) ? select_mascotas2($_GET["mascota"])["edad"] : ""   ?>>
+                            value=<?php echo isset($_GET["modificarMascota"]) ? select_mascotas_by_id($_GET["mascota"])["edad"] : ""   ?>>
                     </div>
                     <div class="radio-group">
                         <label for="chip">Chip</label>
                         <input type="radio" name="chip" id="chip" value="1"
-                            <?php echo (isset($_GET["modificarMascota"]) && select_mascotas2($_GET["mascota"])["chip"] == "1") ? "checked" : ""   ?>>
+                            <?php echo (isset($_GET["modificarMascota"]) && select_mascotas_by_id($_GET["mascota"])["chip"] == "1") ? "checked" : ""   ?>>
                         Si
                         <input type="radio" name="chip" id="chip" value="0"
-                            <?php echo (isset($_GET["modificarMascota"]) && select_mascotas2($_GET["mascota"])["chip"] == "0") ? "checked" : ""   ?>>
+                            <?php echo (isset($_GET["modificarMascota"]) && select_mascotas_by_id($_GET["mascota"])["chip"] == "0") ? "checked" : ""   ?>>
                         No
                     </div>
                     <div class="radio-group">
                         <label for="sexo">Sexo</label>
                         <input type="radio" name="sexo" id="sexo" value="F"
-                            <?php echo (isset($_GET["modificarMascota"]) && select_mascotas2($_GET["mascota"])["sexo"] == "F") ? "checked" : ""   ?>>
+                            <?php echo (isset($_GET["modificarMascota"]) && select_mascotas_by_id($_GET["mascota"])["sexo"] == "F") ? "checked" : ""   ?>>
                         Hembra
                         <input type="radio" name="sexo" id="sexo" value="M"
-                            <?php echo (isset($_GET["modificarMascota"]) && select_mascotas2($_GET["mascota"])["sexo"] == "M") ? "checked" : ""   ?>>
+                            <?php echo (isset($_GET["modificarMascota"]) && select_mascotas_by_id($_GET["mascota"])["sexo"] == "M") ? "checked" : ""   ?>>
                         Macho
                     </div>
                     <div class="input-group">
                         <label for="tipo_animal">Tipo animal</label>
                         <input type="text" id="tipo_animal" name="tipo_animal"
-                            value=<?php echo isset($_GET["modificarMascota"]) ? select_mascotas2($_GET["mascota"])["tipo_animal"] : ""   ?>>
+                            value=<?php echo isset($_GET["modificarMascota"]) ? select_mascotas_by_id($_GET["mascota"])["tipo_animal"] : ""   ?>>
                     </div>
 
 
@@ -355,7 +360,7 @@ select_cliente();
                     <div class="input-group">
                         <label for="vacuna">Selecciona la vacuna que quieres modificar</label>
                         <select name="vacuna" id="select-modify-vacuna"
-                            value=<?php echo isset($_GET["modificarVacuna"]) ? select_vacuna2($_GET["vacuna"])["nombre"] : ""   ?>>>
+                            value=<?php echo isset($_GET["modificarVacuna"]) ? select_vacuna_by_nombre($_GET["vacuna"])["nombre"] : ""   ?>>>
                             <option value="" disabled selected></option>
                             <?php
                             crearVacunaOptions();
@@ -365,15 +370,15 @@ select_cliente();
                     <div class="input-group">
                         <label for="nombre_vacuna">Nombre vacuna (no modificable)</label>
                         <input type="text" id="nombre_vacuna" name="nombre_vacuna" readonly
-                            value=<?php echo isset($_GET["modificarVacuna"]) ? select_vacuna2($_GET["vacuna"])["nombre_vacuna"] : ""   ?>>
+                            value=<?php echo isset($_GET["modificarVacuna"]) ? select_vacuna_by_nombre($_GET["vacuna"])["nombre_vacuna"] : ""   ?>>
                     </div>
                     <div class="radio-group">
                         <label for="obligatoria">Obligatoria</label>
                         <input type="radio" name="obligatoria" id="obligatoria" value="1"
-                            <?php echo (isset($_GET["modificarVacuna"]) && select_vacuna2($_GET["vacuna"])["obligatoria"] == "1") ? "checked" : ""   ?>>
+                            <?php echo (isset($_GET["modificarVacuna"]) && select_vacuna_by_nombre($_GET["vacuna"])["obligatoria"] == "1") ? "checked" : ""   ?>>
                         Si
                         <input type="radio" name="obligatoria" id="obligatoria" value="0"
-                            <?php echo (isset($_GET["modificarVacuna"]) && select_vacuna2($_GET["vacuna"])["obligatoria"] == "0") ? "checked" : ""   ?>>
+                            <?php echo (isset($_GET["modificarVacuna"]) && select_vacuna_by_nombre($_GET["vacuna"])["obligatoria"] == "0") ? "checked" : ""   ?>>
                         No
                     </div>
 

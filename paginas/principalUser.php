@@ -39,7 +39,7 @@ select_cliente();
             <h2 class="saludo">Bienvenido <?php echo $_SESSION["nombre"] . " " . $_SESSION["ape1"] ?></h2>
             <a href="./logout.php" class="btn-logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
 
-            
+
 
         </header>
         <aside class="aside">
@@ -54,72 +54,76 @@ select_cliente();
         </aside>
         <main class="main">
 
-            <?php echo ($_SERVER["REQUEST_METHOD"]=="GET" && isset($_GET["edit"]) && $_GET["edit"] == "false") ? "<p class='cambios'>No hay cambios que realizar</p>" : ""  ?>
-            <?php echo ($_SERVER["REQUEST_METHOD"]=="GET" && isset($_GET["edit"]) && $_GET["edit"] == "true") ? "<p class='cambios'>Cambios realizados</p>" : ""  ?>
+            <?php echo ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["modify"]) && $_GET["modify"] == "false") ? "<p class='cambios'>No hay cambios que realizar</p>" : ""  ?>
+            <?php echo ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["modify"]) && $_GET["modify"] == "true") ? "<p class='cambios'>Cambios realizados</p>" : ""  ?>
 
             <?php echo (!isset($_POST["editar"]) && !isset($_POST["consultar"])) ? "<p class='opcion'>Elige una opcion...</p>" : "" ?>
 
-            <?php if (isset($_POST["editar"])){     ?>
+
+            <!-- Si seleccionamos la opción de editar -->
+            <?php if (isset($_POST["editar"])) {     ?>
+
+                <!-- Formulario cambio de datos del cliente -->
+                <form action="./modify.php" method="get" class="formularioEditar">
+                    <div class="input-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" required value=<?php echo (isset($_SESSION["nombre"])) ? $_SESSION["nombre"] : "" ?>>
+                    </div>
+                    <div class="input-group">
+                        <label for="ape1">Primer Apellido</label>
+                        <input type="text" id="ape1" name="ape1" required value=<?php echo (isset($_SESSION["ape1"])) ? $_SESSION["ape1"] : "" ?>>
+                    </div>
+                    <div class="input-group">
+                        <label for="ape2">Segundo Apellido</label>
+                        <input type="text" id="ape2" name="ape2" value=<?php echo (isset($_SESSION["ape2"])) ? $_SESSION["ape2"] : "" ?>>
+                    </div>
+                    <div class="input-group">
+                        <label for="telefono">Telefono</label>
+                        <input type="text" id="telefono" name="telefono" required value=<?php echo (isset($_SESSION["telefono"])) ? $_SESSION["telefono"] : "" ?>>
+                    </div>
+                    <div class="input-group">
+                        <label for="correo">Correo</label>
+                        <input type="text" id="correo" name="correo" required value=<?php echo (isset($_SESSION["correo"])) ? $_SESSION["correo"] : "" ?>>
+                    </div>
+                    <div class="input-group">
+                        <input type="hidden" id="typeUser" name="typeUser" value="">
+                    </div>
 
 
-            <!-- Formulario cambio de datos del cliente -->
-            <form action="./cambioDatos.php" method="get" class="formularioEditar">
-                <div class="input-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" name="nombre" value=<?php echo (isset($_SESSION["nombre"])) ? $_SESSION["nombre"] : ""?>>
-                </div>
-                <div class="input-group">
-                    <label for="ape1">Primer Apellido</label>
-                    <input type="text" id="ape1" name="ape1" value=<?php echo (isset($_SESSION["ape1"])) ? $_SESSION["ape1"] : ""?>>
-                </div>
-                <div class="input-group">
-                    <label for="ape2">Segundo Apellido</label>
-                    <input type="text" id="ape2" name="ape2" value=<?php echo (isset($_SESSION["ape2"])) ? $_SESSION["ape2"] : ""?>>
-                </div>
-                <div class="input-group">
-                    <label for="telefono">Telefono</label>
-                    <input type="text" id="telefono" name="telefono" value=<?php echo (isset($_SESSION["telefono"])) ? $_SESSION["telefono"] : ""?>>
-                </div>
-                <div class="input-group">
-                    <label for="correo">Correo</label>
-                    <input type="text" id="correo" name="correo" value=<?php echo (isset($_SESSION["correo"])) ? $_SESSION["correo"] : ""?>>
-                </div>
-
-                
-                <button type="submit">Guardar Cambios</button>
-                <button type="reset">Mantener Cambios</button>
-            </form>
+                    <button type="submit">Guardar Cambios</button>
+                    <button type="reset">Mantener Cambios</button>
+                </form>
 
 
 
-            <?php }elseif (isset($_POST["consultar"])){  
+                <?php } elseif (isset($_POST["consultar"])) {
 
-                $mascotas = select_mascotas($_SESSION["user"]);
-           
-                if(count($mascotas) > 0){
-            ?>
-             <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Edad</th>
-                        <th>Sexo</th>
-                        <th>Chip</th>
-                        <th>Tipo</th>
-                    </tr>
-                </thead>
-                <tbody id="mascotas-table-body">
-                    <?php
-                    mostrarMascotas($mascotas);
-                    ?>
-                </tbody>
-            </table>
+                $mascotas = select_mascota_by_user($_SESSION["user"]);
+
+                if (count($mascotas) > 0) {
+                ?>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Edad</th>
+                                <th>Sexo</th>
+                                <th>Chip</th>
+                                <th>Tipo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mascotas-table-body">
+                            <?php
+                            mostrarMascotas($mascotas);
+                            ?>
+                        </tbody>
+                    </table>
             <?php
-            }else{
-                echo $_SESSION['nombre'] . " aun no tienes mascotas registradas";
+                } else {
+                    echo $_SESSION['nombre'] . " aun no tienes mascotas registradas";
+                }
             }
-        }
-  ?>
+            ?>
 
         </main>
         <footer class="footer">
